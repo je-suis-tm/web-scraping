@@ -19,7 +19,7 @@ os.getcwd()
 #this function is basically standard procedure of webscraping
 
 def soup1(t1,t2):
-    #i use proxy handler cuz my company network runs on its proxy
+    #i use proxy handler cuz my uni network runs on its proxy
     #and it forbids python to run on its proxy, so i use empty proxy to bypass it
     proxy_handler = u.ProxyHandler({})
     opener = u.build_opener(proxy_handler)

@@ -65,8 +65,8 @@ def soup2(t1,t2):
         z=j.find_next()
         b.append(z.text)
 
-#the regular expression should be \d*  
-#there is no need for join
+#the volume contains comma, thats why i implement regular expression 
+#alternatively i can use replace, i am not sure about the time complexity of both
     for k in p3:
         k1=re.findall('\d',k.text)
         k2=''.join(k1)

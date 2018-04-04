@@ -27,7 +27,7 @@ a=dt.datetime.now().year
 b=dt.datetime.now().month
 # i wanna scrape t-1, thats why there is a minus one expression
 c=dt.datetime.now().day-1
-
+#k is the class of html structures, its vital to view the source of website first
 k=['xl63','xl64','xl65','xl66','xl68']
 url='http://www.sge.com.cn/sjzx/mrhqsj'
 q=[]
@@ -78,4 +78,4 @@ df=pd.DataFrame()
 for k in range(13):
     df[q[k]]=q[(k+13)::13]
 #the encoding of utf 8 sig is important, otherwise the chinese characters wont show correctly
-df.to_csv('上海黄金交易所.csv',encoding='utf_8_sig')
+df.to_csv('SGE.csv',encoding='utf_8_sig')

@@ -36,7 +36,7 @@ q=[]
 
 def soup1(url):
     try:
-        #i use proxy handler cuz my company network runs on its proxy
+        #i use proxy handler cuz my uni network runs on its proxy
         #and it forbids python to run on its proxy, so i use empty proxy to bypass it
         proxy_handler = u.ProxyHandler({})
         opener = u.build_opener(proxy_handler)

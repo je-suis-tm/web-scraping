@@ -2,6 +2,11 @@
 
 This folder contains some python web scrapers. I mainly use them to scrape the price on different future exchanges around the world. The key thing for scraping is to understand the html structure of the website and doing ETL. So far the most efficient way of ETL I found is regular expression. It is much more powerful than beautiful soup.
 
+1. Chicago Merchantile Exchange
+
+2. Shanghai Future Exchange
+
+3. Shanghai Gold Exchange
 
 # Updates
 

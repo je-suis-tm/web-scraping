@@ -15,3 +15,7 @@ I used to scrape a lot of websites, including Shanghai Metals Market, London Met
 2018/4/9
 
 Previously I had said scraping CME was effortless. It freaking backfired. CME websites changed its website structure from XML to JSON query. So I had to update the new method to scrape CME which is called CME2.
+
+2018/6/19
+
+Updating proxy handler. I used to build empty proxy. For those who actually need to use proxy, please check Shanghai Gold Exchange.

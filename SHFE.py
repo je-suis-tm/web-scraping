@@ -39,10 +39,12 @@ def f(x):
 
 def soup1(date):
     try:
+        
         #i use proxy handler cuz my uni network runs on its proxy
         #and it forbids python to run on its proxy, so i use empty proxy to bypass it
         proxy_handler = u.ProxyHandler({})
         opener = u.build_opener(proxy_handler)
+        
         #there is no need to disguise as an internet browser for SHFE
         req = u.Request('http://www.shfe.com.cn/data/dailydata/kx/kx%s.dat'%(date))
         r = opener.open(req)
@@ -60,11 +62,13 @@ date=y+m+d
 
 #scraping...
 a=(soup1(date))
+
 #if we look closely at the dat file, it is well structured
 #i dont know much about java though, i assume it is some kinda dictionary
 #for every value, it has key
 #hence, i only need to use regular expression to get the numbers behind colon :
 b=re.findall('(?<=:)-?\d*\.?\d*',a.decode('utf-8'))
+
 #i only need the close price, which is the expression of slicing 9::16
 #and i only need certain types of commodity
 #for general use, you can use a function to do slicing 
@@ -77,6 +81,7 @@ ni=c[52:64]
 au=c[78:86]
 ag=c[87:99]
 frb=c[100:112]
+
 #this is just formatting, and export csv file
 #you can customize based on your requirement
 group=al+['','']+cu+['','']+zn+['','']+pb+['','']+ni

@@ -19,10 +19,12 @@ os.getcwd()
 #this function is basically standard procedure of webscraping
 
 def soup1(t1,t2):
+    
     #i use proxy handler cuz my uni network runs on its proxy
     #and it forbids python to run on its proxy, so i use empty proxy to bypass it
     proxy_handler = u.ProxyHandler({})
     opener = u.build_opener(proxy_handler)
+    
     #cme officially forbids scraping
     #so a header must be used to disguise as an internet browser
     #technically speaking, they should be able to block that
@@ -45,10 +47,10 @@ def soup2(t1,t2):
  
     except Exception as e:
         print(e)
+        
 #after scraping, i need date, prior settle price and volume
 #it is essential to view source of the website first
 #then use beautiful soup to search specific class
- 
     p1=p.find_all('span',class_='cmeNoWrap')
     p2=p.find_all('td',class_=['statusOK','statusNull','statusAlert'])
     p3=p.find_all('td',class_="cmeTableRight")
@@ -75,6 +77,7 @@ def soup2(t1,t2):
     df=pd.DataFrame(a)
     df['%s prior settle'%(t2)]=b
     df['%s vol'%(t2)]=c
+    
     # i wanna highlight the pior settlement of front month.
     #The front month is the month where the majority of the trading volume and liquidity occurs.
     z=df['%s prior settle'%(t2)][df['%s vol'%(t2)]==max(df['%s vol'%(t2)])]

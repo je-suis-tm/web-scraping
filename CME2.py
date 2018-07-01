@@ -26,10 +26,12 @@ os.getcwd()
 
 #
 def soup1(t1):
+    
     #i use proxy handler cuz my network runs on its proxy
     #and it forbids python to run on its proxy, so i use empty proxy to bypass it
     proxy_handler = u.ProxyHandler({})
     opener = u.build_opener(proxy_handler)
+    
     #cme officially forbids scraping
     #so a header must be used to disguise as an internet browser
     #technically speaking, they should be able to block that
@@ -65,6 +67,7 @@ def soup2(t1,t2):
     c=re.findall('(?<=volume\":")\S*(?=\","mdKey)',a)
     d=re.findall('(?<=expirationDate\":")\S*(?=\","productName)',a)
     e=[]
+    
     #this loop is to convert the string to float and replace the comma
     #cuz i wanna find out the front month
     #The front month is the month where the majority of the trading volume and liquidity occurs
@@ -78,6 +81,7 @@ def soup2(t1,t2):
     df=pd.DataFrame(d)
     df['%s prior settle'%(t2)]=b
     df['%s vol'%(t2)]=e
+    
     # i wanna highlight the pior settlement of front month.
     #prior to the convertion, i wanna use max function on the volume list
     z=df['%s prior settle'%(t2)][df['%s vol'%(t2)]==max(df['%s vol'%(t2)])]

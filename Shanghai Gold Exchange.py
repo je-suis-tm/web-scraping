@@ -26,8 +26,10 @@ os.getcwd()
 
 a=dt.datetime.now().year
 b=dt.datetime.now().month
+
 # i wanna scrape t-1, thats why there is a minus one expression
 c=dt.datetime.now().day-1
+
 #k is the class of html structures, its vital to view the source of website first
 k=['xl63','xl64','xl65','xl66','xl68']
 url='http://www.sge.com.cn/sjzx/mrhqsj'
@@ -37,6 +39,7 @@ q=[]
 
 def soup1(url):
     try:
+        
         #i use proxy handler cuz my corporate network runs on its proxy
         #just input username, password and proxy
         #note that getpass doesnt work in spyder
@@ -58,6 +61,7 @@ def soup1(url):
 
 #i am using beautiful soup to find the title of yesterday's daily summary report
 p1=soup1(url).find(text=r'上海黄金交易所%d年%d月%d日交易行情' %(a,b,c))
+
 #i go to the parent level of parent level of the text
 #i use regular expression to get the hyperlink ID
 x=re.findall('\d*',str(p1.parent.parent))
@@ -67,6 +71,7 @@ for i in x:
         y.append(i)
 
 print(y)
+
 #formatting the link
 url='http://www.sge.com.cn/sjzx/mrhqsj/%s?top=%s'%(y[0],y[1])
 
@@ -83,7 +88,9 @@ for i in p1:
 
 df=pd.DataFrame()
 #using slicing to turn the list into a structured table
+
 for k in range(13):
     df[q[k]]=q[(k+13)::13]
+    
 #the encoding of utf 8 sig is important, otherwise the chinese characters wont show correctly
 df.to_csv('SGE.csv',encoding='utf_8_sig')

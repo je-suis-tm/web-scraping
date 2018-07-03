@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 
 """
-
 Created on Thu Jun 21 14:28:55 2018
 
-
-
 """
+
+#this is something i have been working for the past few days
+#i intended to create a local database to store everything i scrape from different websites
+#this way, i would be able to compare scraped data with the database
+#it would be easy to find out what has been updated
+#i only need to send those updates via email
+
+#the following codes are a demonstration
+#do not expect it to scrape porn websites
 
 import pandas as pd
 from bs4 import BeautifulSoup as bs 
@@ -19,17 +25,22 @@ import os
 os.chdir('H:\database')
 
 
-
-    
-
-#keep outlook open
+#i use win32 to launch outlook and send email
+#when running on corporate network, it is the easiest way to do
+#otherwise, there is a library called smtp for pop3/imap server
+#supposedly authentication of corporate email would kill u
+#i definitely recommend to use win32 library
+#note that to use win32.email
+#outlook has to be kept open
+#for work, it should be easily managed
 
 def send(ult):
 
+    #before sending emails, gotta double check what we are sending
     print(ult)
-
+    
+    #create an email with recipient, subject, context and attachment
     outlook = win32.Dispatch('outlook.application')  
-
     mail = outlook.CreateItem(0)
 
     

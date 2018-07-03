@@ -19,7 +19,6 @@ from bs4 import BeautifulSoup as bs
 import re
 import datetime as dt
 import os
-import getpass
 
 os.chdir('H:/')
 os.getcwd()
@@ -40,9 +39,7 @@ q=[]
 def soup1(url):
     try:
         
-        #i use proxy handler cuz my corporate network runs on its proxy
-        #just input username, password and proxy
-        #note that getpass doesnt work in spyder
+        #i use empty proxy handler cuz my uni network runs on its proxy
         
         proxy_handler = u.ProxyHandler({})
         opener = u.build_opener(proxy_handler)

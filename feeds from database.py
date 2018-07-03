@@ -91,122 +91,86 @@ def media_etl(page,name):
         
     return df
 
-
-
-
-
-#
-
+#this function is to insert data into sqlite3 database
+#im not gonna go into details for sql
+#for pythoners, sql is a piece of cake
+#go check out the following link for sql
+# https://www.w3schools.com/sql/
 def database(df,name):
-
     
-
+    #plz make sure u have created the database and the table
+    #to create a table in database, first two lines are the same as below
+    #just add a few more lines
     #c.execute("""CREATE TABLE new (title TEXT PRIMARY KEY, link TEXT);""")
-
+    #conn.commit()
+    #conn.close()
+    #to see what its like in the database
+    #use microsoft access or other visualization tools or just pandas
     #db=pd.read_sql("""SELECT * FROM new""",conn)
 
-    
-
-    
-
     conn = sqlite3.connect('new.db')
-
     c = conn.cursor()
-
+    
+    #add a title for output
     out=['','%s'%name,'','']
 
+    #the idea is very simple
+    #insert each line from dataframe to database
+    #as the primary key has been set up
+    #and primary key doesnt allow duplicates
+    #insert what has already been in database would raise an error
+    #ignore the error and continue the iteration
+    #every successful insertion also guarantees insertion into the output
+    #at the end, output only contains updates of the website
     for i in range(len(df)):
-
         try:
-
             c.execute("""INSERT INTO new VALUES (?,?)""",df.iloc[i,:])
-
             conn.commit()
-
             out.append(df.iloc[i,:]['title']+'                 '+df.iloc[i,:]['link'])
-
         except Exception as e:
-
             print(e)
-
-    
 
     conn.close()
 
-    
-
+    #check if the output contains no updates
     if len(out)==4:
-
         out.append('No updates yet, wankers.')
-
-    
 
     return out
 
 
-
-
-
-#
-
+#scraping a concatenation of functions
+#scrape the website, do data etl, insert into database
 def scrape(url,what,method,name):
-
-    
-
+  
     response=soup1(url)
-
     page=response.find_all(what)
-
     df=method(page,name)
-
     out=database(df,name)
 
     return out        
 
-
-
-
-
-#
-
+#scraping is just like the rest scrapers in this repo
+#except we add some extra authentication for corporate proxy
+#note that getpass doesnt work in spyder
 def soup1(url):
-
-    
-
+   
     try:
-
         username='Dr Surname'
-
         password=getpass.getpass('input password:')
-
         proxy='www.someproxyaddress.com:8080'
-
         
-
         proxy_handler = u.ProxyHandler({'http':'%s'%(proxy)})
-
         password_mgr = u.HTTPPasswordMgrWithDefaultRealm()
-
         proxy_auth_handler = u.ProxyBasicAuthHandler(password_mgr)
-
         proxy_auth_handler.add_password(None, 'http://%s'%(proxy),'%s'%(username), '%s'%(password))
-
         
-
         opener = u.build_opener(proxy_handler,proxy_auth_handler)
-
         req = u.Request(url,headers={'User-Agent': 'Mozilla/5.0'})
-
         r = opener.open(req)
-
         result = r.read()
-
-        
-
         soup=bs(result,'html.parser')
-
         
-
         print(url)
 
         return soup
@@ -218,23 +182,14 @@ def soup1(url):
         print(e)
 
         
-
-        
-
+#
 pornhub=scrape('https://www.pornhub.com','h4',media_etl,'pornhub')
-
 xvideos=scrape('https://www.xvideos.com','h4',media_etl,'xvideos')
-
 youporn=scrape('https://www.youporn.com','h3',media_etl,'youporn')
 
-    
-
+#concatenate all these infamous websites:P
 ult=[]
-
 for i in [pornhub,xvideos,youporn]:
-
     ult+=['']+i+['']
-
-        
-
+      
 send(ult)

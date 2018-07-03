@@ -43,14 +43,9 @@ def soup1(url):
         #i use proxy handler cuz my corporate network runs on its proxy
         #just input username, password and proxy
         #note that getpass doesnt work in spyder
-        username=input('username:')
-        password=getpass.getpass('password:')
-        proxy=''
-        proxy_handler = u.ProxyHandler({'http':'%s'%(proxy)})
-        password_mgr = u.HTTPPasswordMgrWithDefaultRealm()
-        proxy_auth_handler = u.ProxyBasicAuthHandler(password_mgr)
-        proxy_auth_handler.add_password(None, 'http://%s'%(proxy), '%s'%(username), '%s'%(password))
-        opener = u.build_opener(proxy_handler,proxy_auth_handler)
+        
+        proxy_handler = u.ProxyHandler({})
+        opener = u.build_opener(proxy_handler)
         req = u.Request(url)
         r = opener.open(req)
         result = r.read()

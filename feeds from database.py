@@ -170,17 +170,12 @@ def soup1(url):
         r = opener.open(req)
         result = r.read()
         soup=bs(result,'html.parser')
-        
         print(url)
 
         return soup
-
     
-
-    except Exception as e:
-
+      except Exception as e:
         print(e)
-
         
 #
 pornhub=scrape('https://www.pornhub.com','h4',media_etl,'pornhub')

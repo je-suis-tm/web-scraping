@@ -43,80 +43,52 @@ def send(ult):
     outlook = win32.Dispatch('outlook.application')  
     mail = outlook.CreateItem(0)
 
-    
-
-    #these emails are fabricated, PLZ DO NOT HARASS OUR GODDESS
-
+    #these email addresses are fabricated, PLZ DO NOT HARASS OUR GODDESS
+    #just some random pornstar i love
     receivers = ['lana.rhodes@brazzers.com','tori.black@brazzers.com','rachel.woods@brazzers.com']  
 
+    #use ';' to separate receipients
+    #this is a requirement of outlook
     mail.To = ';'.join(receivers) 
-
     mail.Subject ='New Feeds %s'%(dt.datetime.now())  
 
+    #remember to use '\r\n' to go to the next line
     mail.Body = '\r\n'.join(ult)
-
     mail.Attachments.Add('new.db') 
 
-    
-
+    #check carefully before sending emails
     condition=str(input('0/1 for no/yes:'))
-
     if condition=='1':
-
         mail.Send()
-
         print('\nSENT')
-
-    
 
     return
 
 
-
-    
-
+#this is a function for data etl
 def media_etl(page,name):
 
     temp=[]
-
     df=pd.DataFrame()
-
-    
-
+  
+    #some scraped links do not contain prefix 'www'
     if name=='xvideos':
-
         prefix='https://www.xvideos.com'
-
     else:
-
         prefix=''
 
-        
-
-        
-
+    
+    #getting the title and link for ...
     for i in page:
-
         try:                
-
             temp.append(i.find('a').get_text())
-
             temp.append(prefix+i.find('a').get('href'))
-
         except:
-
             pass
-
     
-
     df['title']=temp[0::2]
-
     df['link']=temp[1::2]
-
-    
-
         
-
     return df
 
 

@@ -18,4 +18,4 @@ Previously I had said scraping CME was effortless in the py file. It freaking ba
 
 2018/7/3
 
-Uploaded a new py file called feeds. It is designed to scrape several websites and store the information in a local database. And it only sends updates of the information via email.
+Uploaded a new py file called feeds from database. It is designed to scrape several websites and store the information in a local database. And it only sends updates of the information via email.

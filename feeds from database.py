@@ -113,8 +113,7 @@ def database(df,name):
     conn = sqlite3.connect('new.db')
     c = conn.cursor()
     
-    #add a title for output
-    out=['','%s'%name,'','']
+    out=[]
 
     #the idea is very simple
     #insert each line from dataframe to database
@@ -191,6 +190,7 @@ youporn=scrape('https://www.youporn.com','h3',media_etl,'youporn')
 #concatenate all these infamous websites:P
 #and use html to make email looks more elegant
 #html is very simple
+#use br for line break, b for bold fonts, font for color and size, href for hyperlink
 #check the website below to see more html tutorials
 # https://www.w3schools.com/html/
 html=''

@@ -34,6 +34,12 @@ os.chdir('H:\database')
 #outlook has to be kept open
 #for work, it should be easily managed
 
+#win32 library uses COM api to control windows
+#go to microsoft developer network 
+#check mailitem object model to learn how to manipulate outlook emails
+#the website below is the home page of outlook vba reference
+# https://msdn.microsoft.com/en-us/vba/vba-outlook
+
 def send(html):
 
     

@@ -98,7 +98,7 @@ def media_etl(page,name):
 #for pythoners, sql is a piece of cake
 #go check out the following link for sql
 # https://www.w3schools.com/sql/
-def database(df,name):
+def database(df):
     
     #plz make sure u have created the database and the table
     #to create a table in database, first two lines are the same as below
@@ -150,7 +150,7 @@ def scrape(url,what,method,name):
     response=soup1(url)
     page=response.find_all(what)
     df=method(page,name)
-    out=database(df,name)
+    out=database(df)
 
     return out        
 

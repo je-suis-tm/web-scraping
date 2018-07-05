@@ -34,10 +34,8 @@ os.chdir('H:\database')
 #outlook has to be kept open
 #for work, it should be easily managed
 
-def send(ult):
+def send(html):
 
-    #before sending emails, gotta double check what we are sending
-    print(ult)
     
     #create an email with recipient, subject, context and attachment
     outlook = win32.Dispatch('outlook.application')  
@@ -52,9 +50,13 @@ def send(ult):
     mail.To = ';'.join(receivers) 
     mail.Subject ='New Feeds %s'%(dt.datetime.now())  
 
+    #html email is used here
+    #for simple structure, we can use string instead
     #remember to use '\r\n' to go to the next line
-    mail.Body = '\r\n'.join(ult)
-    mail.Attachments.Add('new.db') 
+    #the code should be mail.Body = '\r\n'.join(html)
+    mail.BodyFormat=2
+    mail.HTMLBody=html
+    ail.Attachments.Add('new.db')
 
     #check carefully before sending emails
     condition=str(input('0/1 for no/yes:'))
@@ -126,15 +128,18 @@ def database(df,name):
         try:
             c.execute("""INSERT INTO new VALUES (?,?)""",df.iloc[i,:])
             conn.commit()
-            out.append(df.iloc[i,:]['title']+'                 '+df.iloc[i,:]['link'])
+            out.append(df.iloc[i,:]['title'])
+            out.append(df.iloc[i,:]['link'])
+            print('Updating...')
         except Exception as e:
             print(e)
 
     conn.close()
 
     #check if the output contains no updates
-    if len(out)==4:
-        out.append('No updates yet, wankers.')
+    if not out:
+        out.append('No updates yet.')
+        out.append('')
 
     return out
 
@@ -182,9 +187,21 @@ pornhub=scrape('https://www.pornhub.com','h4',media_etl,'pornhub')
 xvideos=scrape('https://www.xvideos.com','h4',media_etl,'xvideos')
 youporn=scrape('https://www.youporn.com','h3',media_etl,'youporn')
 
+
 #concatenate all these infamous websites:P
-ult=[]
-for i in [pornhub,xvideos,youporn]:
-    ult+=['']+i+['']
-      
-send(ult)
+#and use html to make email looks more elegant
+#html is very simple
+#check the website below to see more html tutorials
+# https://www.w3schools.com/html/
+html=''
+for i in [('pornhub',pornhub),('xvideos',xvideos),('youporn',youporn)]:
+    html+='<br><b><font color="Black">%s<font></b><br><br>'%i[0]
+    for j in range(1,len(i[1]),2):
+        html+='<br><a href="%s"><font color="#6F6F6F">%s<font><a><br>'%(i[1][j],i[1][j-1])
+    html+='<br>'
+
+#take a look at what we are gonna send before sending
+#alternatively, we can add one more line to send function
+#use mail.Display() to see the draft
+print(pornhub,xvideos,youporn)
+send(html)

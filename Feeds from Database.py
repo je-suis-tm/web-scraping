@@ -62,7 +62,7 @@ def send(html):
     #the code should be mail.Body = '\r\n'.join(html)
     mail.BodyFormat=2
     mail.HTMLBody=html
-    ail.Attachments.Add('new.db')
+    mail.Attachments.Add('new.db')
 
     #check carefully before sending emails
     condition=str(input('0/1 for no/yes:'))

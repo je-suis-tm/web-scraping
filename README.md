@@ -1,4 +1,4 @@
-# Web-scraping
+# Intro
 
 This folder contains some python web scrapers. I mainly use them to scrape the price on different global future exchanges and major news websites (or so-called fake news lol). The key thing for scraping is to figure out the structure of html parse tree of the website and to do ETL. So far the most efficient way of ETL I found is regular expression. It is much more powerful than beautiful soup (beautiful soup is very good tho). Of course, writing regular expression is a pain in the ass for any human being. 
 
@@ -24,4 +24,4 @@ I had said scraping CME was effortless in CME1.py file. It freaking backfired, l
 
 2018/7/3
 
-I uploaded a new py file called Scrape, ETL, HTML Emails from Database.py (okay, this is a shittyname, I admit it). It is designed to scrape several websites and store the information in a local database. And it would automatically sends updates of the information via HTML structured email.
+I uploaded a new py file called Scrape, ETL, HTML Email from Database.py (okay, this is a shittyname, I admit it). It is designed to scrape several websites and store the information in a local database. And it would automatically sends updates of the information via HTML structured email.

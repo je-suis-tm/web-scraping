@@ -189,6 +189,10 @@ def aljazeera(page):
     
     df['title']=title
     df['link']=link
+    
+    #sometimes al jazeera website has a big headline image
+    #that would change html parse tree
+    #which is freaking annoying
     try:
         df['image']=image
     except ValueError:

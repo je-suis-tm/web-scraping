@@ -49,7 +49,7 @@ def send(html):
 
     #these email addresses are fabricated, PLZ DO NOT HARASS OUR GODDESS
     #just some random pornstar i love
-    receivers = ['lana.rhodes@brazzers.com','tori.black@brazzers.com','rachel.woods@brazzers.com']  
+    receivers = ['lana.rhodes@brazzers.com','tori.black@brazzers.com','naomi.woods@brazzers.com']  
 
     #use ';' to separate receipients
     #this is a requirement of outlook

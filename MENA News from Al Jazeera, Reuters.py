@@ -7,11 +7,13 @@
 
 import pandas as pd
 from bs4 import BeautifulSoup as bs 
+import marketanalysis as ma
 import datetime as dt
 import win32com.client as win32 
 import sqlite3
 import os
-import urllib3 as u
+import re
+import copy
 import time
 os.chdir('d:/')
 
@@ -20,9 +22,11 @@ os.chdir('d:/')
 def main():
     
     aj=scrape('https://www.aljazeera.com/topics/regions/middleeast.html',aljazeera)
-    return
-    tr=scrape('https://www.reuters.com/news/archive/middle-east',reuters)
-    
+    tr=scrape('https://www.reuters.com/news/archive/middle-east',reuters)    
+    bc=scrape(session,'https://www.bbc.co.uk/news/world/middle_east',bbc)
+    ws=scrape(session,'https://www.wsj.com/news/types/middle-east-news',wsj)
+  
+    print(aj,tr,bc,ws)
     
     html=''
     
@@ -31,17 +35,18 @@ def main():
     #it may be a lil bit slow to load the image but its the most efficient way
     #alternatively, we can use mail.Attachments.add()
     #we attach all images, and set <img src='cid: imagename.jpg'>
-    #the issue with this method is that we have to scrape the website for images repeatedly
+    #the issue with this method is that we have to scrape the website repeatedly
     #or we can use < img src='data:image/jpg; base64, [remove the brackets and paste base64]'/>
     #but this is blocked by most email clients including outlook 2016
-    for i in [('Al Jazeera',aj),('Reuters',tr)]:
+    for i in [('Al Jazeera',aj),('Reuters',tr),('BBC',bc),('WSJ',ws)]:
         html+='<br><b><font color="Black">%s<font></b><br><br>'%i[0]
-        for j in range(1,len(i[1]),3):
+        for j in range(2,len(i[1]),3):
             html+="""<br><a href="%s"><font color="#6F6F6F">%s<font><a><br>
-            <img src="%s" width="200" height="150"/><br><br>"""%(i[1][j],i[1][j-1],i[1][j-2])
+            <img src="%s" width="200" height="150"/><br><br>"""%(i[1][j-1],i[1][j-2],i[1][j])
             html+='<br>'
         
     send(html)
+
 
     
 #send html email via outlook
@@ -49,7 +54,7 @@ def send(html):
     
     outlook = win32.Dispatch('outlook.application')  
     mail = outlook.CreateItem(0)  
-    receivers = ['anyone@companyname.com']  
+    receivers = ['naomi.woods@brazzers.com']  
     mail.To = ';'.join(receivers) 
     mail.Subject ='Mid East News Feeds %s'%(dt.datetime.now())
     mail.BodyFormat=2
@@ -63,15 +68,78 @@ def send(html):
     return
 
 
-#reuters data etl
-def reuters(page):
+#wall street journal etl
+def wsj(page):
     
-    print('reuters data etl')
+    df=pd.DataFrame()
+    
+    text=str(page)
+
+    link=re.findall('(?<=headline"> <a href=")\S*(?=">)',text)
+
+    image=re.findall('(?<=img data-src=")\S*(?=")',text)
+
+    title=[]
+    for i in link:
+        try:
+            temp=re.search('(?<={}")>(.*?)<'.format(i),text).group()
+            title.append(temp)
+        except:
+            pass
+
+    for i in range(len(title)):
+        title[i]=title[i].replace('â€™',"'").replace('<','').replace('>','')
+        
+    df['title']=title
+    df['link']=link[:len(title)]
+    df['image']=image
+        
+    return df
+
+
+#bbc etl
+def bbc(page):
     
     title,link,image=[],[],[]
     df=pd.DataFrame()
     
-    prefix='https://www.reuters.com'
+    prefix='https://www.bbc.co.uk'
+    
+    a=page.find_all('span',class_='title-link__title-text')
+    
+    for i in a:
+        temp=i.parent.parent.parent.parent
+        b=(re.findall('(?<=src=")\S*(?=jpg)',str(temp)))
+        
+        if len(b)>0:
+            b=copy.deepcopy(b[0])+'jpg'
+        else:
+            b=''
+            
+        image.append(b)
+    
+    for j in a:
+        title.append(j.text)
+    
+    for k in a:
+        temp=k.parent.parent
+        c=re.findall('(?<=href=")\S*(?=">)',str(temp))
+        link.append(prefix+c[0])
+        
+    df['title']=title
+    df['link']=link
+    df['image']=image
+    
+    return df
+
+
+
+#thompson reuters etl
+def reuters(page):
+    title,link,image=[],[],[]
+    df=pd.DataFrame()
+    
+    prefix='https://www.aljazeera.com'
         
     for i in page.find('div', class_='news-headline-list').find_all('h3'):
         temp=i.text.replace('								','')
@@ -92,16 +160,12 @@ def reuters(page):
     df['link']=link
     df['image']=image
     
-        
     return df
 
 
 
-#al jazeera data etl
+#al jazeera etl
 def aljazeera(page):
-    
-    print('al jazeera data etl')
-    
     title,link,image=[],[],[]
     df=pd.DataFrame()
     
@@ -116,25 +180,19 @@ def aljazeera(page):
     b=page.find_all('div',class_='col-sm-7 topics-sec-item-cont')
     for j in b:
         title.append(j.find('h2').text)
-        link.append(prefix+j.find_all('a')[1].get('href'))
+        link.append(j.find_all('a')[1].get('href'))
         
-        #sometimes they replace pic with stupid avatar
-        try:
-            image.append(prefix+j.find('img').get('src'))
-        except AttributeError:
-            pass
-    
     c=page.find_all('div',class_='col-sm-5 topics-sec-item-img')
     for k in c:
-        temp=(prefix+k.find_all('img')[1].get('data-src'))
-        image.append(temp)
-    
-    
+        image.append(prefix+k.find_all('img')[1].get('data-src'))
+
     
     df['title']=title
     df['link']=link
-    df['image']=image
-    
+    try:
+        df['image']=image
+    except ValueError:
+        df['image']=['']+image
         
     return df
 
@@ -161,6 +219,7 @@ def database(df):
     
     if not out:
         out.append('No updates yet.')
+        out.append('')
         out.append('')
     
     return out

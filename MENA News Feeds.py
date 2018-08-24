@@ -25,8 +25,10 @@ def main():
     tr=scrape('https://www.reuters.com/news/archive/middle-east',reuters)    
     bc=scrape(session,'https://www.bbc.co.uk/news/world/middle_east',bbc)
     ws=scrape(session,'https://www.wsj.com/news/types/middle-east-news',wsj)
+    ft=scrape(session,'https://www.ft.com/world/mideast',financialtimes)
+    bb=scrape(session,'https://www.bloomberg.com/view/topics/middle-east',bloomberg)
   
-    print(aj,tr,bc,ws)
+    print(aj,tr,bc,ws,ft,bb)
     
     html=''
     
@@ -38,7 +40,8 @@ def main():
     #the issue with this method is that we have to scrape the website repeatedly
     #or we can use < img src='data:image/jpg; base64, [remove the brackets and paste base64]'/>
     #but this is blocked by most email clients including outlook 2016
-    for i in [('Al Jazeera',aj),('Reuters',tr),('BBC',bc),('WSJ',ws)]:
+    for i in [('Al Jazeera',aj),('Reuters',tr),('BBC',bc),('WSJ',ws),\
+             ('Bloomberg',bb)，('Financial Times',ft)]:
         html+='<br><b><font color="Black">%s<font></b><br><br>'%i[0]
         for j in range(2,len(i[1]),3):
             html+="""<br><a href="%s"><font color="#6F6F6F">%s<font><a><br>
@@ -66,6 +69,82 @@ def send(html):
         print('\nSENT')
     
     return
+
+
+
+#bloomberg etl
+def bloomberg(page):
+    c=[]
+    title,link,image=[],[],[]
+    df=pd.DataFrame()
+    prefix='https://www.bloomberg.com'
+    
+    a=page.find_all('h1')
+    for i in a:
+        try:
+            link.append(prefix+i.find('a').get('href'))
+            title.append(i.find('a').text.replace('â€™','\''))
+        except:
+            pass
+    
+
+    b=page.find_all('li')
+    for j in b:
+        try:
+            temp=j.find('article').get('style')
+            
+            image.append( \
+                         re.search('(?<=url\()\S*(?=\))', \
+                                   temp).group() \
+                        )
+        except:
+            temp=j.find('article')
+            
+            try:
+                temp2=temp.get('id')
+                if not temp2:
+                    image.append('')
+            except:
+                pass
+
+
+    df['title']=title
+    df['link']=link
+    df['image']=image
+    
+    return df
+
+
+
+#financial times etl
+def financialtimes(page):
+    
+    title,link,image=[],[],[]
+    df=pd.DataFrame()
+    
+    prefix='https://www.ft.com'
+
+    a=page.find_all('a',class_='js-teaser-heading-link')
+    for i in a:
+        link.append(prefix+i.get('href'))
+        temp=i.text[20:].replace('â€™','\'').replace('â€˜','\'')
+        title.append(temp.replace('\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',''))
+
+    for j in a:
+        temp=j.parent.parent.parent
+        try:
+            url=temp.find('img').get('data-srcset')
+            text=re.search('\S*(?=next)',url).group()
+            image.append(text+'next&fit=scale-down&compression=best&width=210')
+        except:
+            image.append('')
+    
+    df['title']=title
+    df['link']=link
+    df['image']=image
+    
+    return df
+
 
 
 #wall street journal etl

@@ -20,6 +20,10 @@ I used to scrape a lot of websites when I was working in a commodity trading hou
 
 7. Wall Street Journal
 
+8. Financial Times
+
+9. Bloomberg
+
 # Updates
 
 2018/4/9

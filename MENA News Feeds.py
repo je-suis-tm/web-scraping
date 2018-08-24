@@ -1,6 +1,6 @@
 # coding: utf-8
 
-#this file is to scrape news title, article link and image link from some media stream websites
+#this file is to scrape news title, article link and image link from some major news websites initially
 #next, insert latest feeds into database and send html emails including titles, links and images
 #for details of scraping, database and outlook manipulation, plz take my previous file as a reference
 # https://github.com/tattooday/web-scraping/blob/master/Feeds%20from%20Database.py
@@ -37,7 +37,7 @@ def main():
     #it may be a lil bit slow to load the image but its the most efficient way
     #alternatively, we can use mail.Attachments.add()
     #we attach all images, and set <img src='cid: imagename.jpg'>
-    #the issue with this method is that we have to scrape the website repeatedly
+    #the issue with this method is that we have to scrape the website repeatedly to get images
     #or we can use < img src='data:image/jpg; base64, [remove the brackets and paste base64]'/>
     #but this is blocked by most email clients including outlook 2016
     for i in [('Al Jazeera',aj),('Reuters',tr),('BBC',bc),('WSJ',ws),\

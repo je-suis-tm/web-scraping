@@ -6,23 +6,23 @@ I used to scrape a lot of websites when I was working in a commodity trading hou
 
 # Websites
 
-1. Chicago Merchantile Exchange CME
+1. Wall Street Journal WSJ
 
-2. Shanghai Future Exchange SHFE
+2. Financial Times FT
 
-3. Shanghai Gold Exchange SGE
+3. Bloomberg
 
 4. Reuters
 
-5. Al Jazeera
+5. Al Jazeera AJ
 
 6. BBC
 
-7. Wall Street Journal
+7. Chicago Merchantile Exchange CME
 
-8. Financial Times
+8. Shanghai Future Exchange SHFE
 
-9. Bloomberg
+9. Shanghai Gold Exchange SGE
 
 # Updates
 

@@ -27,8 +27,10 @@ def main():
     ws=scrape(session,'https://www.wsj.com/news/types/middle-east-news',wsj)
     ft=scrape(session,'https://www.ft.com/world/mideast',financialtimes)
     bb=scrape(session,'https://www.bloomberg.com/view/topics/middle-east',bloomberg)
-  
-    print(aj,tr,bc,ws,ft,bb)
+    cn=scrape(session,'https://edition.cnn.com/middle-east',cnn)
+    fo=scrape(session,'https://fortune.com/tag/middle-east/',fortune)
+    
+    print(aj,tr,bc,ws,ft,bb,cn,fo)
     
     html=''
     
@@ -41,7 +43,8 @@ def main():
     #or we can use < img src='data:image/jpg; base64, [remove the brackets and paste base64]'/>
     #but this is blocked by most email clients including outlook 2016
     for i in [('Al Jazeera',aj),('Reuters',tr),('BBC',bc),('WSJ',ws),\
-             ('Bloomberg',bb)，('Financial Times',ft)]:
+             ('Bloomberg',bb)，('Financial Times',ft), \
+             ('CNN',cn),('Fortune',fo)]:
         html+='<br><b><font color="Black">%s<font></b><br><br>'%i[0]
         for j in range(2,len(i[1]),3):
             html+="""<br><a href="%s"><font color="#6F6F6F">%s<font><a><br>
@@ -70,6 +73,57 @@ def send(html):
     
     return
 
+
+#fortune etl
+def fortune(page):
+    
+    title,link,image=[],[],[]
+    df=pd.DataFrame()
+    prefix='https://fortune.com'
+    
+    a=page.find_all('article')
+    
+    for i in a:
+    
+        link.append(prefix+i.find('a').get('href'))
+    
+        if 'http' in i.find('img').get('src'):
+            image.append(i.find('img').get('src'))
+        else:
+            image.append('')
+    
+        temp=re.split('\s*',i.find_all('a')[1].text)
+        temp.pop()
+        temp.pop(0)
+        title.append(' '.join(temp))
+
+    df['title']=title
+    df['link']=link
+    df['image']=image
+    
+    return df
+
+
+
+#cnn etl
+def cnn(page):
+    
+    title,link,image=[],[],[]
+    df=pd.DataFrame()
+    
+    prefix='https://edition.cnn.com'
+    
+    a=page.find_all('div', class_='cd__wrapper')
+    for i in a:
+        title.append(i.text)
+        link.append(prefix+i.find('a').get('href'))
+        image.append('https:'+i.find('img').get('data-src-medium'))
+        
+    df['title']=title
+    df['link']=link
+    df['image']=image
+    
+    return df
 
 
 #bloomberg etl

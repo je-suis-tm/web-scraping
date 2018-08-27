@@ -18,11 +18,17 @@ I used to scrape a lot of websites when I was working in a commodity trading hou
 
 6. BBC
 
-7. Chicago Merchantile Exchange CME
+7. Fortune
 
-8. Shanghai Future Exchange SHFE
+8. CNN
 
-9. Shanghai Gold Exchange SGE
+9. Chicago Merchantile Exchange CME
+
+10. London Metal Exchange LME
+
+11. Shanghai Future Exchange SHFE
+
+12. Shanghai Gold Exchange SGE
 
 # Updates
 

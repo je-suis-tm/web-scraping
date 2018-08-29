@@ -311,27 +311,33 @@ def aljazeera(page):
         link.append(prefix+i.find('a').get('href'))
     
     b=page.find_all('div',class_='col-sm-7 topics-sec-item-cont')
-    for j in b:
-        title.append(j.find('h2').text)
-        link.append(j.find_all('a')[1].get('href'))
-        
     c=page.find_all('div',class_='col-sm-5 topics-sec-item-img')
-    for k in c:
-        image.append(prefix+k.find_all('img')[1].get('data-src'))
+    
+    limit=max(len(b),len(c))
+    j,k=0,0
+    while j<limit:
+        
+        title.append(b[j].find('h2').text)
+        link.append(b[j].find_all('a')[1].get('href'))
+        
+        #when there is an opinion article
+        #the image tag would change
+        #terrible website
+        if 'opinion' in b[j].find('a').get('href'):
+            image.append(' ')
 
+        else:
+            image.append(prefix+c[k].find_all('img')[1].get('data-src'))
+            k+=1
+            
+        j+=1
     
     df['title']=title
     df['link']=link
-    
-    #sometimes al jazeera website has a big headline image
-    #that would change html parse tree
-    #which is freaking annoying
-    try:
-        df['image']=image
-    except ValueError:
-        df['image']=['']+image
+    df['image']=image
         
     return df
+
 
 
 

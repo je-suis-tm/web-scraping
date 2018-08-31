@@ -181,7 +181,7 @@ def financialtimes(page):
     a=page.find_all('a',class_='js-teaser-heading-link')
     for i in a:
         link.append(prefix+i.get('href'))
-        temp=i.text[20:].replace('â€™','\'').replace('â€˜','\'')
+        temp=i.text.replace('â€™','\'').replace('â€˜','\'')
         title.append(temp.replace('\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t',''))
 
     for j in a:

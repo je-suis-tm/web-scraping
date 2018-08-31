@@ -175,7 +175,6 @@ def financialtimes(page):
     
     title,link,image=[],[],[]
     df=pd.DataFrame()
-    
     prefix='https://www.ft.com'
 
     a=page.find_all('a',class_='js-teaser-heading-link')

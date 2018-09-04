@@ -271,7 +271,7 @@ def reuters(page):
     title,link,image=[],[],[]
     df=pd.DataFrame()
     
-    prefix='https://www.aljazeera.com'
+    prefix='https://www.reuters.com'
         
     for i in page.find('div', class_='news-headline-list').find_all('h3'):
         temp=i.text.replace('								','')
@@ -307,7 +307,8 @@ def aljazeera(page):
     for i in a:
         title.append(i.find('img').get('title'))
         image.append(prefix+i.find('img').get('src'))
-        link.append(prefix+i.find('a').get('href'))
+        temp=i.find('a').get('href')
+        link.append(temp if 'www' in temp else (prefix+temp))
     
     b=page.find_all('div',class_='col-sm-7 topics-sec-item-cont')
     c=page.find_all('div',class_='col-sm-5 topics-sec-item-img')
@@ -317,7 +318,8 @@ def aljazeera(page):
     while j<limit:
         
         title.append(b[j].find('h2').text)
-        link.append(b[j].find_all('a')[1].get('href'))
+        temp=b[j].find_all('a')[1].get('href')
+        link.append(temp if 'www' in temp else (prefix+temp))
         
         #when there is an opinion article
         #the image tag would change

@@ -186,8 +186,7 @@ def financialtimes(page):
     for j in a:
         temp=j.parent.parent.parent
         try:
-            url=temp.find('img').get('data-srcset')
-            text=re.search('\S*(?=next)',url).group()
+            text=re.search('(?<=")\S*(?=next)',str(temp)).group()
             image.append(text+'next&fit=scale-down&compression=best&width=210')
         except:
             image.append('')

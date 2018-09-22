@@ -97,7 +97,7 @@ def send(html):
     return
 
 
-#the economists etl
+#the economist etl
 def economist(page):
     
     title,link,image=[],[],[]

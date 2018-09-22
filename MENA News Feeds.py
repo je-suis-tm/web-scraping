@@ -17,10 +17,16 @@ import copy
 import time
 os.chdir('d:/')
 
+#this is a home made special package for text mining
+#it is designed to extract key information and remove similar contents
+#for details of this graph traversal algorithm plz refer to the following link
+# https://github.com/tattooday/graph-theory/blob/master/Text%20Mining%20project/alternative%20bfs.py
+import graph
 
 #main stuff
 def main():
     
+    ec=scrape(session,'https://www.economist.com/middle-east-and-africa/',economist)
     aj=scrape('https://www.aljazeera.com/topics/regions/middleeast.html',aljazeera)
     tr=scrape('https://www.reuters.com/news/archive/middle-east',reuters)    
     bc=scrape(session,'https://www.bbc.co.uk/news/world/middle_east',bbc)
@@ -72,6 +78,29 @@ def send(html):
         print('\nSENT')
     
     return
+
+
+#the economists etl
+def economist(page):
+    
+    title,link,image=[],[],[]
+    df=pd.DataFrame()
+    prefix='https://www.economist.com'
+    
+    a=page.find_all('div',class_="topic-item-container")
+    
+    for i in a:
+    
+        link.append(prefix+i.find('a').get('href'))
+        title.append(i.find('a').text)
+        image.append(i.parent.find('img').get('src'))
+
+    df['title']=title
+    df['link']=link
+    df['image']=image
+    
+    return df
+
 
 
 #fortune etl

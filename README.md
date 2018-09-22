@@ -30,6 +30,8 @@ I used to scrape a lot of websites when I was working in a commodity trading hou
 
 12. Shanghai Gold Exchange SGE
 
+13. The Economist
+
 # Updates
 
 2018/4/9
@@ -39,3 +41,7 @@ I had said scraping CME was effortless in CME1.py file. It freaking backfired, l
 2018/7/3
 
 I uploaded a new py file called Scrape, ETL, HTML Email from Database.py (okay, this is a shitty name, I admit it). It is designed to scrape several websites and store the information in a local database. And it would automatically sends updates of the information via HTML structured email.
+
+2018/9/21
+
+There is a major change on MENA news feeds.

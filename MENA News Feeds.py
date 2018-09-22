@@ -1,8 +1,10 @@
 # coding: utf-8
 
 #this file is to scrape news title, article link and image link from some major news websites initially
-#next, insert latest feeds into database and send html emails including titles, links and images
-#for details of scraping, database and outlook manipulation, plz take my previous file as a reference
+#next, insert scraped content into database and only keep the latest information
+#after that, use home made graph structure traversal algorithm to extract key info and remove similar contents
+#finally, send html emails including titles, links and images
+#for details of scraping, database and outlook manipulation, plz take the following link as a reference
 # https://github.com/tattooday/web-scraping/blob/master/Feeds%20from%20Database.py
 
 import pandas as pd
@@ -36,14 +38,21 @@ def main():
     cn=scrape('https://edition.cnn.com/middle-east',cnn)
     fo=scrape('https://fortune.com/tag/middle-east/',fortune)
     
+    #concat scraped data via append, can use pd.concat as an alternative
+    #unlike the previous version, current version does not sort information by source
     df=ft
     for i in [aj,tr,bc,ws,cn,fo,ec,bb]:
         df=df.append(i)
     
+    #CRUCIAL!!!
+    #as we append dataframe together, we need to reset the index
+    #otherwise, we would not be able to use reindex in database function call
     df.reset_index(inplace=True,drop=True)
-
+    
+    #first round, insert into database and remove outdated information
     df=database(df)
     
+    #second round, use home made package to remove similar contents
     output=graph.remove_similar(df,graph.stopword)
     
     print(output)

@@ -26,15 +26,15 @@ import graph
 #main stuff
 def main():
     
-    ec=scrape(session,'https://www.economist.com/middle-east-and-africa/',economist)
+    ec=scrape('https://www.economist.com/middle-east-and-africa/',economist)
     aj=scrape('https://www.aljazeera.com/topics/regions/middleeast.html',aljazeera)
     tr=scrape('https://www.reuters.com/news/archive/middle-east',reuters)    
-    bc=scrape(session,'https://www.bbc.co.uk/news/world/middle_east',bbc)
-    ws=scrape(session,'https://www.wsj.com/news/types/middle-east-news',wsj)
-    ft=scrape(session,'https://www.ft.com/world/mideast',financialtimes)
-    bb=scrape(session,'https://www.bloomberg.com/view/topics/middle-east',bloomberg)
-    cn=scrape(session,'https://edition.cnn.com/middle-east',cnn)
-    fo=scrape(session,'https://fortune.com/tag/middle-east/',fortune)
+    bc=scrape('https://www.bbc.co.uk/news/world/middle_east',bbc)
+    ws=scrape('https://www.wsj.com/news/types/middle-east-news',wsj)
+    ft=scrape('https://www.ft.com/world/mideast',financialtimes)
+    bb=scrape('https://www.bloomberg.com/view/topics/middle-east',bloomberg)
+    cn=scrape('https://edition.cnn.com/middle-east',cnn)
+    fo=scrape('https://fortune.com/tag/middle-east/',fortune)
     
     print(aj,tr,bc,ws,ft,bb,cn,fo)
     

@@ -117,7 +117,10 @@ def cnn(page):
     for i in a:
         title.append(i.text)
         link.append(prefix+i.find('a').get('href'))
-        image.append('https:'+i.find('img').get('data-src-medium'))
+        try:
+            image.append('https:'+i.find('img').get('data-src-medium'))
+        except:
+            image.append('')
         
     df['title']=title
     df['link']=link

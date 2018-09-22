@@ -36,9 +36,19 @@ def main():
     cn=scrape('https://edition.cnn.com/middle-east',cnn)
     fo=scrape('https://fortune.com/tag/middle-east/',fortune)
     
-    print(aj,tr,bc,ws,ft,bb,cn,fo)
+    df=ft
+    for i in [aj,tr,bc,ws,cn,fo,ec,bb]:
+        df=df.append(i)
     
-    html=''
+    df.reset_index(inplace=True,drop=True)
+
+    df=database(df)
+    
+    output=graph.remove_similar(df,graph.stopword)
+    
+    print(output)
+    
+    html='<br><b><font color="Black">Mid East<font></b><br><br>'
     
     #there are a few ways for embed image in html email
     #here, we use the link of the image
@@ -48,15 +58,13 @@ def main():
     #the issue with this method is that we have to scrape the website repeatedly to get images
     #or we can use < img src='data:image/jpg; base64, [remove the brackets and paste base64]'/>
     #but this is blocked by most email clients including outlook 2016
-    for i in [('Al Jazeera',aj),('Reuters',tr),('BBC',bc),('WSJ',ws),\
-             ('Bloomberg',bb)，('Financial Times',ft), \
-             ('CNN',cn),('Fortune',fo)]:
-        html+='<br><b><font color="Black">%s<font></b><br><br>'%i[0]
-        for j in range(2,len(i[1]),3):
-            html+="""<br><a href="%s"><font color="#6F6F6F">%s<font><a><br>
-            <img src="%s" width="200" height="150"/><br><br>"""%(i[1][j-1],i[1][j-2],i[1][j])
-            html+='<br>'
+    for i in range(len(output)):
         
+        html+="""<br><a href="%s"><font color="#6F6F6F">%s<font><a><br>
+        <img src="%s" width="200" height="150"/>
+        <br><br>"""%(output['link'][i],output['title'][i],output['image'][i])
+        html+='<br>'
+    
     send(html)
 
 
@@ -376,28 +384,27 @@ def aljazeera(page):
 #database insertion and output the latest feeds
 def database(df):
     
+    temp=[]
     conn = sqlite3.connect('mideast_news.db')
     c = conn.cursor()
-    out=[]
+    
+    
     for i in range(len(df)):
         try:
             c.execute("""INSERT INTO news VALUES (?,?,?)""",df.iloc[i,:])
             conn.commit()
-            out.append(df.iloc[i,:]['title'])
-            out.append(df.iloc[i,:]['link'])
-            out.append(df.iloc[i,:]['image'])
             print('Updating...')
+            temp.append(i)
         except Exception as e:
             print(e)
     
     conn.close()
     
-    if not out:
-        out.append('No updates yet.')
-        out.append('')
-        out.append('')
+    output=df.loc[[i for i in temp]]
+    output.reset_index(inplace=True,drop=True)
     
-    return out
+    return output
+
 
 
 #scraping webpages

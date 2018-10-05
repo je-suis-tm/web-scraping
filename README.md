@@ -44,4 +44,6 @@ I uploaded a new py file called Scrape, ETL, HTML Email from Database.py (okay, 
 
 2018/9/21
 
-There is a major change on MENA news feeds.
+There is a major change on MENA news feeds.py. Instead of sending an email sorted by sources, I decided to concatnate them together and use graphy theory to extract key information and remove similar contents. This is a cross repo project called Text Mining Project. Please refer to the following link for the details of text mining after scraping.
+
+https://github.com/tattooday/graph-theory/blob/master/Text%20Mining%20project/README.md

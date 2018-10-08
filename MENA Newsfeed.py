@@ -85,7 +85,7 @@ def send(html):
     mail = outlook.CreateItem(0)  
     receivers = ['naomi.woods@brazzers.com']  
     mail.To = ';'.join(receivers) 
-    mail.Subject ='Mid East News Feeds %s'%(dt.datetime.now())
+    mail.Subject ='Mid East Newsfeed %s'%(dt.datetime.now())
     mail.BodyFormat=2
     mail.HTMLBody=html
     

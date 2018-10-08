@@ -160,8 +160,9 @@ def cnn(page):
     prefix='https://edition.cnn.com'
     
     a=page.find_all('div', class_='cd__wrapper')
+    
     for i in a:
-        title.append(i.text)
+        title.append(i.find('span').text)
         link.append(prefix+i.find('a').get('href'))
         try:
             image.append('https:'+i.find('img').get('data-src-medium'))

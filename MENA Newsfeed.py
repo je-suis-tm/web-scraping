@@ -273,7 +273,7 @@ def wsj(page):
         
     df['title']=title
     df['link']=link[:len(title)]
-    df['image']=image
+    df['image']=image+[''] if (len(image)!=len(title)) else image
         
     return df
 

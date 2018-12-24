@@ -55,6 +55,13 @@ def main():
     #second round, use home made package to remove similar contents
     output=graph.remove_similar(df,graph.stopword)
     
+    #if the link is not correctly captured
+    #remove anything before www and add https://
+    for i in range(len(output)):
+        if 'https://' not in output['link'][i]:
+            temp=re.search('www',output['link'][i]).start()
+            output.at[i,'link']='http://'+output['link'][i][temp:]
+    
     print(output)
     
     html='<br><b><font color="Black">Mid East<font></b><br><br>'

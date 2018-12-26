@@ -64,7 +64,49 @@ def main():
     
     print(output)
     
-    html='<br><b><font color="Black">Mid East<font></b><br><br>'
+    #using html email template
+    #check stripo for different templates
+    # https://stripo.email/templates/
+    html="""
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html>
+
+    <head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="telephone=no" name="format-detection">
+    <title></title>
+    <!--[if (mso 16)]>
+    <style type="text/css">
+    a {text-decoration: none;}
+    </style>
+    <![endif]-->
+    <!--[if gte mso 9]><style>sup 
+    { font-size: 100% !important; }</style><![endif]-->
+    </head>
+
+    <body>
+    <div class="es-wrapper-color">
+        <!--[if gte mso 9]>
+                <v:background xmlns:v="urn:schemas-microsoft-com:vml" 
+                fill="t">
+                    <v:fill type="tile" color="#333333"></v:fill>
+                </v:background>
+            <![endif]-->
+        <table class="es-content-body" width="600" 
+        cellspacing="15" cellpadding="15" bgcolor="#ffffff" 
+        align="center">
+         <tr>
+            <td class="esd-block-text" align="center">
+            <h2>Middle East</h2></td>
+         </tr></table>
+         <div><br></div>
+        
+    """
+
     
     #there are a few ways for embed image in html email
     #here, we use the link of the image
@@ -75,11 +117,23 @@ def main():
     #or we can use < img src='data:image/jpg; base64, [remove the brackets and paste base64]'/>
     #but this is blocked by most email clients including outlook 2016
     for i in range(len(output)):
+        html+="""<table class="es-content-body" width="600" 
+        cellspacing="10" cellpadding="5" bgcolor="#ffffff"
+        align="center">"""
+        html+="""<tr><td class="esd-block-text es-p10t es-p10b"
+        align="center"><p><a href="%s">
+        <font color="#6F6F6F">%s<font><a></p></td></tr>
+        <tr><td align="center">
+        <img src="%s" width="200" height="150"/></td></tr>
+        <tr>"""%(output['link'][i],output['title'][i],output['image'][i])
+        html+="""</tr></table><div><br></div>"""
         
-        html+="""<br><a href="%s"><font color="#6F6F6F">%s<font><a><br>
-        <img src="%s" width="200" height="150"/>
-        <br><br>"""%(output['link'][i],output['title'][i],output['image'][i])
-        html+='<br>'
+    html+="""
+    </div>
+    </body>
+    </html>
+    """
+    
     
     send(html)
 

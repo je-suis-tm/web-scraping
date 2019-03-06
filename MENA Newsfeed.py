@@ -5,7 +5,7 @@
 #after that, use home made graph structure traversal algorithm to extract key info and remove similar contents
 #finally, send html emails including titles, links and images
 #for details of scraping, database and outlook manipulation, plz take the following link as a reference
-# https://github.com/tattooday/web-scraping/blob/master/Feeds%20from%20Database.py
+# https://github.com/je-suis-tm/web-scraping/blob/master/Feeds%20from%20Database.py
 
 import pandas as pd
 from bs4 import BeautifulSoup as bs 
@@ -22,7 +22,7 @@ os.chdir('d:/')
 #this is a home made special package for text mining
 #it is designed to extract key information and remove similar contents
 #for details of this graph traversal algorithm plz refer to the following link
-# https://github.com/tattooday/graph-theory/blob/master/Text%20Mining%20project/alternative%20bfs.py
+# https://github.com/je-suis-tm/graph-theory/blob/master/Text%20Mining%20project/alternative%20bfs.py
 import graph
 
 #main stuff

@@ -10,6 +10,8 @@ This folder contains some python web scrapers. I mainly use them to scrape the p
 
 I used to scrape a lot of websites when I was working in a commodity trading house (not gonna tell you which, but it's pretty famous and the work culture is fucking awful). If you can't get anything from html parse tree, you should inspect element and monitor the network to see if you can track the source (sometimes you could encounter awful hash functions, omg). If this doesn't work, okay, it's javascript. Gotta try selenium then.
 
+<br>
+
 ## Table of Contents
 
 #### Beginner

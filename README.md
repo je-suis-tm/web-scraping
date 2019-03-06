@@ -1,6 +1,6 @@
-#Web Scraping
+# Web Scraping
 
-*Since this repo gained unexpected popularity, I would restructure everything slowly to make it more user-friendly. After all, most scripts were written in a very immature way during my early days of Python learning. Meanwhile, please be patient and see if anything that helps you along the way to being a data engineer. Merci beaucoup!*
+*Since this repository gained unexpected popularity, I would restructure everything slowly to make it more user-friendly. After all, most scripts were written in a very immature way during my early days of Python learning. Meanwhile, please be patient and see if anything that may help you along the way to being a data engineer. Merci beaucoup!*
 
 ## Intro
 
@@ -26,7 +26,13 @@ I used to scrape a lot of websites when I was working in a commodity trading hou
 
 3. Newsfeed (MENA)
 
-## Websites
+### Notes
+
+1. Proxy Authentication
+
+2. Ethics
+
+## Available Scrapers
 
 1. Wall Street Journal WSJ
 
@@ -44,13 +50,13 @@ I used to scrape a lot of websites when I was working in a commodity trading hou
 
 8. Cable News Network CNN
 
-9. Chicago Merchantile Exchange CME
+9. The Economist
 
 10. London Metal Exchange LME
 
-11. Shanghai Future Exchange SHFE
+11. Chicago Merchantile Exchange CME
 
-12. The Economist
+12. Shanghai Future Exchange SHFE
 
 13. Certificate in Quantitative Finance CQF
 

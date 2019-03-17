@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
 
-
-
-
-
+#this is a script to store scraped content into database
+#if we scrape a lot of websites or simply scrape a website everyday
+#we will end up with a huge amount of data
+#it is essential to create a data warehouse to keep everything organized
+import sqlite3
 import requests
 import pandas as pd
 from io import BytesIO
@@ -97,7 +98,46 @@ def etl(content,date):
     return output
 
 
+#this function is to insert data into sqlite3 database
+#i will not go into details for sql grammar
+#for pythoners, sql is a piece of cake
+#go check out the following link for sql
+# https://www.w3schools.com/sql/
+def database(df):
+    
+    #plz make sure u have created the database and the table to proceed
+    #to create a table in database, first two lines are the same as below
+    #just add a few more lines
+    
+    #c.execute("""CREATE TABLE lme (position TEXT, value FLOAT, type TEXT, date DATE);""")
+    #conn.commit()
+    #conn.close()
+    
+    #to see what it looks like in the database
+    #use microsoft access or toad or just pandas
+    #db=pd.read_sql("""SELECT * FROM lme""",conn)
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    
+    
+    #insert data
+    for i in range(len(df)):
+        try:
+            c.execute("""INSERT INTO lme VALUES (?,?,?,?)""",df.iloc[i,:])
+            conn.commit()
+            print('Updating...')
+        except Exception as e:
+            print(e)
+    
+    #always need to close it
+    conn.close()
 
+    print('Done.')
+
+    return 
+
+
+#
 def main():
     
     url_list=get_download_link()
@@ -105,6 +145,8 @@ def main():
     content,date=get_report(url_list)
     
     output=etl(content,date)
+    
+    database(output)
     
 
 if __name__ == "__main__":

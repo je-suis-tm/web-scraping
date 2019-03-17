@@ -40,30 +40,30 @@ I used to scrape a lot of websites when I was working in a commodity trading hou
 
 ## Available Scrapers
 
-1. Wall Street Journal WSJ
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>1. Wall Street Journal WSJ</a>
 
-2. Financial Times FT
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>2. Financial Times FT</a>
 
-3. Bloomberg
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>3. Bloomberg</a>
 
-4. Thompson Reuters
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>4. Thompson Reuters</a>
 
-5. Al Jazeera AJ
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>5. Al Jazeera AJ</a>
 
-6. British Broadcasting Corporation BBC
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>6. British Broadcasting Corporation BBC</a>
 
-7. Fortune
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>7. Fortune</a>
 
-8. Cable News Network CNN
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>8. Cable News Network CNN</a>
 
-9. The Economist
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>9. The Economist</a>
 
-10. London Metal Exchange LME
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/LME.py>10. London Metal Exchange LME</a>
 
-11. Chicago Merchantile Exchange CME
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/CME2.py>11. Chicago Merchantile Exchange CME</a>
 
-12. Shanghai Future Exchange SHFE
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/SHFE.py>12. Shanghai Future Exchange SHFE</a>
 
-13. Certificate in Quantitative Finance CQF
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/CQF.py>13. Certificate in Quantitative Finance CQF</a>
 
 

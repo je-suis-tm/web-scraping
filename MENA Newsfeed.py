@@ -1,15 +1,20 @@
 # coding: utf-8
 
-#this file is to scrape news title, article link and image link from some major news websites initially
-#next, insert scraped content into database and only keep the latest information
-#after that, use home made graph structure traversal algorithm to extract key info and remove similar contents
-#finally, send html emails including titles, links and images
-#for details of scraping, database and outlook manipulation, plz take the following link as a reference
-# https://github.com/je-suis-tm/web-scraping/blob/master/Feeds%20from%20Database.py
+#this script is about the latest news of MENA region
+#we scrape different influential media websites, or so-called fake news, lol
+#and send only updates to the mailbox for daily newsfeed
+#in order to do that, we need a db to store all the historical content of websites
+#and all the scraping techniques from html parse tree to regular expression
+#over time, i also discovered the issue of information overload in daily newsfeed
+#hence, i invented a graph theory based algorithm to extract key information
+#a part of this algo will also be featured in this script to solve info redundancy
+#as u can see, this is the most advanced script in web scraping repository
+#it contains almost every technique we have introduced so far
+#make sure you have gone through all the other scripts before moving onto this one
 
 import pandas as pd
-from bs4 import BeautifulSoup as bs 
-import marketanalysis as ma
+from bs4 import BeautifulSoup as bs
+import requests
 import datetime as dt
 import win32com.client as win32 
 import sqlite3
@@ -24,6 +29,7 @@ os.chdir('d:/')
 #for details of this graph traversal algorithm plz refer to the following link
 # https://github.com/je-suis-tm/graph-theory/blob/master/Text%20Mining%20project/alternative%20bfs.py
 import graph
+
 
 #main stuff
 def main():
@@ -40,6 +46,7 @@ def main():
     
     #concat scraped data via append, can use pd.concat as an alternative
     #unlike the previous version, current version does not sort information by source
+    #the purpose of blending data together is to go through text mining pipeline
     df=ft
     for i in [aj,tr,bc,ws,cn,fo,ec,bb]:
         df=df.append(i)
@@ -63,6 +70,7 @@ def main():
             output.at[i,'link']='http://'+output['link'][i][temp:]
     
     print(output)
+    
     
     #using html email template
     #check stripo for different templates
@@ -106,14 +114,14 @@ def main():
          <div><br></div>
         
     """
-
+    
     
     #there are a few ways for embed image in html email
     #here, we use the link of the image
     #it may be a lil bit slow to load the image but its the most efficient way
     #alternatively, we can use mail.Attachments.add()
     #we attach all images, and set <img src='cid: imagename.jpg'>
-    #the issue with this method is that we have to scrape the website repeatedly to get images
+    #the downside is that we have to scrape the website repeatedly to get images
     #or we can use < img src='data:image/jpg; base64, [remove the brackets and paste base64]'/>
     #but this is blocked by most email clients including outlook 2016
     for i in range(len(output)):
@@ -137,27 +145,136 @@ def main():
     
     send(html)
 
+   
+#i use win32 to control outlook and send emails
+#when you have a win 10 pro, it is the easiest way to do it
+#cuz windows pro automatically launches outlook at startup
+#otherwise, there is a library called smtp for pop3/imap server
+#supposedly authentication of corporate email would kill u
+#i definitely recommend folks to use win32 library
+#note that using win32.email requires outlook to stay active
+#do not close the app until u actually send out the email
 
-    
-#send html email via outlook
+#win32 library uses COM api to control windows
+#go to microsoft developer network 
+#check mailitem object model to learn how to manipulate outlook emails
+#the website below is the home page of outlook vba reference
+# https://msdn.microsoft.com/en-us/vba/vba-outlook
 def send(html):
-    
+        
+    #create an email with recipient, subject, context and attachment
     outlook = win32.Dispatch('outlook.application')  
     mail = outlook.CreateItem(0)  
-    receivers = ['naomi.woods@brazzers.com']  
+    
+    #these email addresses are fabricated, PLZ DO NOT HARASS OUR GODDESS
+    #just some random pornstar i love
+    receivers = ['lana.rhodes@brazzers.com',
+                 'tori.black@brazzers.com',
+                 'naomi.woods@brazzers.com']  
+
+    #use ';' to separate receipients
+    #this is a requirement of outlook
     mail.To = ';'.join(receivers) 
+    
     mail.Subject ='Mid East Newsfeed %s'%(dt.datetime.now())
     mail.BodyFormat=2
+    
+    #use html to make email looks more elegant
+    #html is very simple
+    #use br for line break, b for bold fonts
+    #font for color and size, a href for hyperlink
+    #check the website below to see more html tutorials
+    # https://www.w3schools.com/html/
+    
+    #Alternatively, we can use plain text email
+    #remember to use '\r\n' to jump line
+    #assuming html is a list of str
+    #the code should be mail.Body = '\r\n'.join(html)
     mail.HTMLBody=html
     
+    #i usually print out everything
+    #need to check carefully before sending to stakeholders
+    #we can use mail.Display() to see the draft instead
     condition=str(input('0/1 for no/yes:'))
     if condition=='1':
         mail.Send()
         print('\nSENT')
+    else:
+        print('\nABORT')
     
     return
 
 
+#database insertion and output the latest feeds
+#i assume you are familiar with sqlite3
+#if not, plz check the following link
+# https://github.com/je-suis-tm/web-scraping/blob/master/LME.py
+def database(df):
+    
+    temp=[]
+    conn = sqlite3.connect('mideast_news.db')
+    c = conn.cursor()
+    
+    #the table structure is simple
+    #the table name is new
+    #there are three columns, title, link and image
+    #the data types of all of them are TEXT
+    #title is the primary key which forbids duplicates
+    for i in range(len(df)):
+        try:
+            c.execute("""INSERT INTO news VALUES (?,?,?)""",df.iloc[i,:])
+            conn.commit()
+            
+            print('Updating...')
+            
+            #the idea is very simple
+            #insert each line from our scraped result into database
+            #as the primary key has been set up
+            #we have non-duplicate title constraint
+            #insert what has already been in database would raise an error
+            #if so, just ignore the error and pass to the next iteration
+            #we can utilize the nature of database to pick out the latest information
+            #every successful insertion into the database also goes to the output
+            #at the end, output contains nothing but latest updates of websites
+            #that is what we call newsfeed
+            temp.append(i)
+            
+        except Exception as e:
+            print(e)
+    
+    conn.close()
+    
+    #check if the output contains no updates
+    if temp:
+        output=df.loc[[i for i in temp]]
+        output.reset_index(inplace=True,drop=True)
+    else:
+        output=pd.DataFrame()
+        output['title']=['No updates yet.']
+        output['link']=output['image']=['']
+    
+    return output
+
+
+#scraping webpages and do some etl
+def scrape(url,method):
+    
+    print('scraping webpage effortlessly')
+    time.sleep(5)
+    
+    session=requests.Session()
+    response = session.get(url,headers={'User-Agent': 'Mozilla/5.0'})      
+    page=bs(response.content,'html.parser',from_encoding='utf_8_sig')
+    
+    df=method(page) 
+    out=database(df)
+    
+    return out        
+
+
+"""
+the functions below are data etl of different media sources
+"""
 #the economist etl
 def economist(page):
     
@@ -178,7 +295,6 @@ def economist(page):
     df['image']=image
     
     return df
-
 
 
 #fortune etl
@@ -211,7 +327,6 @@ def fortune(page):
     return df
 
 
-
 #cnn etl
 def cnn(page):
     
@@ -239,7 +354,7 @@ def cnn(page):
 
 #bloomberg etl
 def bloomberg(page):
-    c=[]
+
     title,link,image=[],[],[]
     df=pd.DataFrame()
     prefix='https://www.bloomberg.com'
@@ -280,7 +395,6 @@ def bloomberg(page):
     return df
 
 
-
 #financial times etl
 def financialtimes(page):
     
@@ -307,7 +421,6 @@ def financialtimes(page):
     df['image']=image
     
     return df
-
 
 
 #wall street journal etl
@@ -375,7 +488,6 @@ def bbc(page):
     return df
 
 
-
 #thompson reuters etl
 def reuters(page):
     title,link,image=[],[],[]
@@ -403,7 +515,6 @@ def reuters(page):
     df['image']=image
     
     return df
-
 
 
 #al jazeera etl
@@ -448,52 +559,6 @@ def aljazeera(page):
     df['image']=image
         
     return df
-
-
-
-
-#database insertion and output the latest feeds
-def database(df):
-    
-    temp=[]
-    conn = sqlite3.connect('mideast_news.db')
-    c = conn.cursor()
-    
-    
-    for i in range(len(df)):
-        try:
-            c.execute("""INSERT INTO news VALUES (?,?,?)""",df.iloc[i,:])
-            conn.commit()
-            print('Updating...')
-            temp.append(i)
-        except Exception as e:
-            print(e)
-    
-    conn.close()
-    
-    output=df.loc[[i for i in temp]]
-    output.reset_index(inplace=True,drop=True)
-    
-    return output
-
-
-
-#scraping webpages
-def scrape(url,method):
-    
-    
-    print('scraping webpage effortlessly')
-    time.sleep(5)
-    
-    http = u.PoolManager()
-    response = http.request('GET',url,headers={'User-Agent': 'Mozilla/5.0'})      
-    page=bs(response.data,'html.parser')
-    
-    df=method(page) 
-    out=database(df)
-    
-    return out        
-
 
 
 if __name__ == "__main__":

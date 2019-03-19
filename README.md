@@ -20,23 +20,23 @@ Scripts inside this repository are classified into two groups, beginner and adva
 
 <a href=https://github.com/je-suis-tm/web-scraping#1-html-parse-tree-search-cme1>1. HTML Parse Tree Search (CME1)</a>
 
-2. JSON (CME2)
+<a href=>2. JSON (CME2)</a>
 
-3. Regular Expression (SHFE)
+<a href=>3. Regular Expression (SHFE)</a>
 
 #### Advanced
 
-1. Sign-in (CQF)
+<a href=>1. Sign-in (CQF)</a>
 
-2. Database (LME)
+<a href=>2. Database (LME)</a>
 
-3. Newsfeed (MENA)
+<a href=>3. Newsfeed (MENA)</a>
 
 #### Notes
 
-1. Proxy Authentication
+<a href=>1. Proxy Authentication</a>
 
-2. Ethics
+<a href=>2. Ethics</a>
 
 <br>
 
@@ -67,6 +67,8 @@ Scripts inside this repository are classified into two groups, beginner and adva
 <a href=https://github.com/je-suis-tm/web-scraping/blob/master/SHFE.py>12. Shanghai Future Exchange SHFE</a>
 
 <a href=https://github.com/je-suis-tm/web-scraping/blob/master/CQF.py>13. Certificate in Quantitative Finance CQF</a>
+
+<br>
 
 ## Beginner
 
@@ -99,3 +101,22 @@ Or we are interested in all the titles of the articles, we do
 The attribute `find_all` returns all the matched results. Note that the second article has a subtitle ‘subscriber only’, we will have a rather longer title for the second article. 
 
 You can refer to <a href= https://github.com/je-suis-tm/web-scraping/blob/master/CME1.py>CME1</a> for more details. Please note that CME1 is an outdated script for Chicago Mercantile Exchange. Due to the change of the website, you cannot go through HTML parse tree to extract data any more. Yet, the concept of HTML parse tree is still applicable to other cases.
+
+#### 2. JSON (CME2)
+
+#### 3. Regular Expression (SHFE)
+
+## Advanced
+
+#### 1. Sign-in (CQF)
+
+#### 2. Database (LME)
+
+#### 3. Newsfeed (MENA)
+
+## Notes
+
+#### 1. Proxy Authentication
+
+#### 2. Ethics
+

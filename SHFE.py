@@ -2,102 +2,114 @@
 """
 Created on Thu Mar 29 10:48:35 2018
 
-
 """
 
-import urllib.request as u
+#Shanghai Future Exchange's daily price is stored in a dat file
+#when you make a query on the website
+#the page runs jquery to get the json file
+#then convert json to dat file and put it on the website table
+#the process can be tracked by inspect element
+#the logic of getting dat file is pretty much the same as cme2
+# https://github.com/je-suis-tm/web-scraping/blob/master/CME2.py
+#theoretically speaking, we can use the same trick as json
+#here, we apply a more general way to process it
+#regular expression a.k.a. regex
+
+#regex can work on any sort of text extraction
+#when we cannot extract text from html parse tree 
+#or maybe we just need a part of the text
+#regex is the most efficient way
+#even for a simple html parse tree
+#we can still convert response.content to string first
+#and apply regex to extract what we need later
+#regex in python is the same as regex in any other languages
+#the rules of regex is basically universal
+#check the link below to see more details of regex
+# https://www.w3schools.com/python/python_regex.asp
+import requests
 import pandas as pd
 import re
-
 import datetime as dt
 import os
-
-#Shanghai Future Exchange's daily price is stored in a dat file
-#and when you do query on the website
-#it runs jquery then format the dat file into the website
-#it can be tracked by pressing f12 to inspect element on network
 os.chdir('H:/')
-os.getcwd()
-
-y=str(dt.datetime.now().year)
-m=(dt.datetime.now().month)
-# i normally scraped t-1 prices
-d=(dt.datetime.now().day)-1
 
 
-#this funtion is used to format the date, the date that SHFE uses is yyyymmdd
-#for instance january, if we use datetime now, we only get 1
-#so for digits smaller than 10, add 0 before it
-
-def f(x):
-    if int(x)<10:
-        return '0'+str(x)
-    else:
-        return str(x)
+#this funtion is to format the date
+#the date format of SHFE is yyyymmdd
+def format_date():
     
-#this function is basically standard procedure of webscraping
-
-def soup1(date):
-    try:
-        
-        #i use proxy handler cuz my uni network runs on its proxy
-        #and it forbids python to run on its proxy, so i use empty proxy to bypass it
-        proxy_handler = u.ProxyHandler({})
-        opener = u.build_opener(proxy_handler)
-        
-        #there is no need to disguise as an internet browser for SHFE
-        req = u.Request('http://www.shfe.com.cn/data/dailydata/kx/kx%s.dat'%(date))
-        r = opener.open(req)
-        result = r.read()
-        
-        return result
-    except Exception as e:
-        print(e)
+    year=str(dt.datetime.now().year)
+    month=(dt.datetime.now().month)
+    
+    #i normally get t-1 prices
+    day=(dt.datetime.now().day)-1
+    
+    datetime=str(pd.to_datetime(f'{year}-{month}-{day}'))
+    date=datetime[:10].replace('-','')
+    
+    return date
 
 
-#this is the procedure of formatting yyyymmdd
-m=f(m)
-d=f(d)
-date=y+m+d
-
-#scraping...
-a=(soup1(date))
-
-#if we look closely at the dat file, it is well structured
-#i dont know much about java though, i assume it is some kinda dictionary
-#for every value, it has key
-#hence, i only need to use regular expression to get the numbers behind colon :
-b=re.findall('(?<=:)-?\d*\.?\d*',a.decode('utf-8'))
-
-#i only need the close price, which is the expression of slicing 9::16
-#and i only need certain types of commodity
-#for general use, you can use a function to do slicing 
-c=b[9::16]
-cu=c[0:12]
-al=c[13:25]
-zn=c[26:38]
-pb=c[39:51]
-ni=c[52:64]
-au=c[78:86]
-ag=c[87:99]
-frb=c[100:112]
-
-#this is just formatting, and export csv file
-#you can customize based on your requirement
-group=al+['','']+cu+['','']+zn+['','']+pb+['','']+ni
-upload=[al[0]]+cu[0:3]+zn[0:3]+pb[0:3]+frb[0:2]+[ag[2]]+['']+[au[2]]+ni[0:2]+[ni[3]]+[0]*50
-df=pd.DataFrame(upload)
-df['upload']=group
-df['al extra']=al[1]
-df.to_csv('murex update.csv')
-
-
-#this is the regular expression to get date of each contract
-#even though price and date are both stored in values of dictionary
-#date has quotation marks
-#i dont need date for my work, if u need it, just use this regular expression
-d=re.findall('(?<=")\d*(?=")',a.decode('utf-8'))
-e=d[0:12]
 #
+def scrape(date):
+    
+    session=requests.Session()
+    response = session.get('http://www.shfe.com.cn/data/dailydata/kx/kx%s.dat'%(date))
+        
+    return response.content
 
 
+#
+def etl(content):
+    
+    #if we look closely at dat file, it is just json in another format
+    #all we need to do is to discover the pattern of where the data is stored
+    #all the price data i care about are behind colon :
+    #regex lookahead will do the trick
+    numbers=re.findall('(?<=:)-?\d*\.?\d*',content.decode('utf_8-sig'))
+
+    #i only need the close price, which is the expression of slicing 9::16
+    #and i only need certain types of commodity
+    temp=numbers[9::16]
+    cu=temp[0:12]
+    al=temp[13:25]
+    zn=temp[26:38]
+    pb=temp[39:51]
+    ni=temp[52:64]
+    au=temp[78:86]
+    ag=temp[87:99]
+    frb=temp[100:112]
+
+    #customize the format based on my requirement
+    group=al+['','']+cu+['','']+zn+['','']+pb+['','']+ni
+    upload=[al[0]]+cu[0:3]+zn[0:3]+pb[0:3]+frb[0:2]+[ag[2]]+['']+[au[2]]+ni[0:2]+[ni[3]]+[0]*50
+    df=pd.DataFrame(upload)
+    df['upload']=group
+    df['al extra']=al[1]
+
+    return df
+    
+    #this is the regex to get date of each contract
+    #even though price and date are both stored in the same file
+    #date has quotation marks, price doesnt
+    #i dont need date, if u need it, just use the regex below
+    
+    """
+    temp=re.findall('(?<=")\d*(?=")',content.decode('utf_8-sig'))
+    date=temp[0:12]
+    """
+
+#
+def main():
+    
+    date=format_date()
+    
+    content=scrape(date)
+    
+    df=etl(content)
+    
+    df.to_csv('murex update.csv')
+    
+    
+if __name__ == "__main__":
+    main()

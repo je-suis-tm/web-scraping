@@ -20,23 +20,23 @@ Scripts inside this repository are classified into two groups, beginner and adva
 
 <a href=https://github.com/je-suis-tm/web-scraping#1-html-parse-tree-search-cme1>1. HTML Parse Tree Search (CME1)</a>
 
-<a href=>2. JSON (CME2)</a>
+<a href=https://github.com/je-suis-tm/web-scraping#2-json-cme2>2. JSON (CME2)</a>
 
-<a href=>3. Regular Expression (SHFE)</a>
+<a href=https://github.com/je-suis-tm/web-scraping#3-regular-expression-shfe>3. Regular Expression (SHFE)</a>
 
 #### Advanced
 
-<a href=>1. Sign-in (CQF)</a>
+<a href=https://github.com/je-suis-tm/web-scraping#1-sign-in-cqf>1. Sign-in (CQF)</a>
 
-<a href=>2. Database (LME)</a>
+<a href=https://github.com/je-suis-tm/web-scraping#2-database-lme>2. Database (LME)</a>
 
-<a href=>3. Newsfeed (MENA)</a>
+<a href=https://github.com/je-suis-tm/web-scraping#3-newsfeed-mena>3. Newsfeed (MENA)</a>
 
 #### Notes
 
-<a href=>1. Proxy Authentication</a>
+<a href=https://github.com/je-suis-tm/web-scraping#1-proxy-authentication>1. Proxy Authentication</a>
 
-<a href=>2. Ethics</a>
+<a href=https://github.com/je-suis-tm/web-scraping#2-ethics>2. Ethics</a>
 
 <br>
 
@@ -106,6 +106,8 @@ You can refer to <a href= https://github.com/je-suis-tm/web-scraping/blob/master
 
 #### 3. Regular Expression (SHFE)
 
+<br>
+
 ## Advanced
 
 #### 1. Sign-in (CQF)
@@ -113,6 +115,8 @@ You can refer to <a href= https://github.com/je-suis-tm/web-scraping/blob/master
 #### 2. Database (LME)
 
 #### 3. Newsfeed (MENA)
+
+<br>
 
 ## Notes
 

@@ -151,6 +151,8 @@ Voila!
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cme2%20euronext.PNG)
 
+You can refer to <a href= https://github.com/je-suis-tm/web-scraping/blob/master/CME2.py>CME2</a> for more details. Please note that CME2 is currently the available scraper for Chicago Mercantile Exchange.
+
 #### 3. Regular Expression (SHFE)
 
 <br>

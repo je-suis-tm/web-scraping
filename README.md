@@ -104,6 +104,53 @@ You can refer to <a href= https://github.com/je-suis-tm/web-scraping/blob/master
 
 #### 2. JSON (CME2)
 
+JSON, is the initial for JavaScript Object Notation. Like csv, it is another format to store data. According to the <a href=https://www.json.org>official website</a> of JSON, it is easy for humans to read and write. Pfff, are you fxxking kidding me? If you open JSON with notepad, you will see something like this.
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cme2%20json.PNG)
+
+Gosh, the structure is messy and I will have a panic attack very soon. Just kidding. If you are familiar with adjacency list in graph theory, you will find it very easy to understand JSON. If not, do not worry, JSON is merely dictionaries inside dictionaries (with some lists as well). To navigate through the data structure, all you need to know is the key of the value.
+Reading a JSON file in Python is straight forward. There are two ways.
+There is a default package just called json, you can do
+
+`import json`
+
+`with open('data.json') as f:`
+
+`	data = json.load(f)`
+
+`print(data)`
+
+Nevertheless, I propose a much easier way. We can parse the content to pandas and treat it like a dataframe. You can do
+
+`import pandas as pd`
+
+`df=pd.read_json('data.json')`
+
+`print(df)`
+
+Reading JSON is not really the main purpose of this chapter. What really made me rewrite the scraper for CME is the change of website structure. In April 2018, I could not extract data from searching for HTML tags any more. I came to realize that CME used JavaScript to create a dynamic website. The great era of BeautifulSoup was water under the bridge. At this critical point of either adapt or die, I had to find out where the data came from. Guess where?
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cme2%20url.PNG)
+
+The URL is still in page source! The HTML tag for the hidden link is `<script>`. As I have mentioned at the beginning of this README file, scraping is about patience and attention to details. If you try to search all `<script>` tags, you will end up with more than 100 results. My friends, patience is a virtue. 
+As for other websites, we may not be that lucky. Take <a href= https://www.euronext.com/en/products/indices/FR0003502079-XPAR>Euronext</a> for example, you won’t find any data in page source. We have to right click and select inspect element (CTRL+SHIFT+I in Chrome, F12 in IE).
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cme2%20inspect%20element.png)
+
+The next step is to select Network Monitor in a pop-up window. Now let’s view data.
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cme2%20network.PNG)
+
+There is a lot of traffic. Each one contains some information. Currently what truly matters to us is the request URL. Other information such as header or post form data will be featured in a later chapter. We must go through all the traffic to find out which URL leads to a JSON file. Once we hit the jackpot, we right click the request and copy link address.
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cme2%20request%20url.PNG)
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cme2%20link%20address.png)
+
+Voila!
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cme2%20euronext.PNG)
+
 #### 3. Regular Expression (SHFE)
 
 <br>

@@ -1,6 +1,6 @@
 # Web Scraping
 
-*The readme is still under renovation. Please be patient as I am quite busy (lazy) at the moment. Merci beaucoup!*
+*The readme is still under renovation. Please be patient as I am quite busy (lazy) at the moment. Veuillez patienter. Merci beaucoup!*
 
 <br>
 
@@ -86,7 +86,7 @@ There is something interesting about HTML parse tree. The first word after the l
 
 It is vital to understand the basics of HTML parse tree because most websites with simple layout can easily be traversed via a library called BeautifulSoup. When we use urllib or other packages to request a specific website via python, we end up with HTML parse tree in bytes. When the bytes are parsed to BeautifulSoup, it makes life easier. It allows us to search the tag name and other attributes to get the content we need. The link to the documentation of BeautifulSoup is <a href= https://www.crummy.com/software/BeautifulSoup/bs4/doc>here</a>.
 
-For instance, we would love to get the link to quiz on Dragon Ball, we can do
+For instance, we would love to get the link to the quiz on Dragon Ball, we can do
 
 `result.find(‘div’,class_=’article article__list old__article-square’).find(‘a’).get(‘href’)`
 
@@ -98,18 +98,20 @@ Or we are interested in all the titles of the articles, we do
 
 `output=[i.text for i in temp]`
 
-The attribute `find_all` returns all the matched results. Note that the second article has a subtitle ‘subscriber only’, we will have a rather longer title for the second article. 
+The attribute `find_all` returns all the matched results. `.text` attribute automatically gets all `str` values inside the current tag. The second article has a subtitle ‘subscriber only’. So we will have a rather longer title for the second article compared to the rest. 
 
 You can refer to <a href= https://github.com/je-suis-tm/web-scraping/blob/master/CME1.py>CME1</a> for more details. Please note that CME1 is an outdated script for Chicago Mercantile Exchange. Due to the change of the website, you cannot go through HTML parse tree to extract data any more. Yet, the concept of HTML parse tree is still applicable to other cases.
 
 #### 2. JSON (CME2)
 
-JSON, is the initial for JavaScript Object Notation. Like csv, it is another format to store data. According to the <a href=https://www.json.org>official website</a> of JSON, it is easy for humans to read and write. Pfff, are you fxxking kidding me? If you open JSON with notepad, you will see something like this.
+JSON, is the initial for JavaScript Object Notation. Like csv, it is another format to store data. According to the <a href=https://www.json.org>official website</a> of JSON, it is easy for humans to read and write. Pfff, are you fxxking with me? If you open JSON with notepad, you will see something like this.
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cme2%20json.PNG)
 
-Gosh, the structure is messy and I will have a panic attack very soon. Just kidding. If you are familiar with adjacency list in graph theory, you will find it very easy to understand JSON. If not, do not worry, JSON is merely dictionaries inside dictionaries (with some lists as well). To navigate through the data structure, all you need to know is the key of the value.
+Gosh, the structure is messy and I will have a panic attack very soon. Duh! Just kidding. If you are familiar with adjacency list in graph theory, you will find it very easy to understand JSON. If not, do not worry, JSON is merely dictionaries inside dictionaries (with some lists as well). To navigate through the data structure, all you need to know is the key of the value.
+
 Reading a JSON file in Python is straight forward. There are two ways.
+
 There is a default package just called json, you can do
 
 `import json`
@@ -128,11 +130,12 @@ Nevertheless, I propose a much easier way. We can parse the content to pandas an
 
 `print(df)`
 
-Reading JSON is not really the main purpose of this chapter. What really made me rewrite the scraper for CME is the change of website structure. In April 2018, I could not extract data from searching for HTML tags any more. I came to realize that CME used JavaScript to create a dynamic website. The great era of BeautifulSoup was water under the bridge. At this critical point of either adapt or die, I had to find out where the data came from. Guess where?
+Reading JSON is not really the main purpose of this chapter. What really made me rewrite the scraper for CME is the change of website structure. In April 2018, I could not extract data from searching for HTML tags any more. I came to realize that CME created a dynamic website by JavaScript. The great era of BeautifulSoup was water under the bridge. At this critical point of either adapt or die, I had to find out where the data came from and develop a new script. Guess where?
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cme2%20url.PNG)
 
-The URL is still in page source! The HTML tag for the hidden link is `<script>`. As I have mentioned at the beginning of this README file, scraping is about patience and attention to details. If you try to search all `<script>` tags, you will end up with more than 100 results. My friends, patience is a virtue. 
+The URL is still in page source! The HTML tag for the hidden link is `<script>`. As I have mentioned at the beginning of this README file, scraping is about patience and attention to details. If you try to search all `<script>` tags, you will end up with more than 100 results. It took me a while for me to sniff the data source. My friends, patience is a virtue. 
+
 As for other websites, we may not be that lucky. Take <a href= https://www.euronext.com/en/products/indices/FR0003502079-XPAR>Euronext</a> for example, you won’t find any data in page source. We have to right click and select inspect element (CTRL+SHIFT+I in Chrome, F12 in IE).
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cme2%20inspect%20element.png)
@@ -151,7 +154,7 @@ Voila!
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cme2%20euronext.PNG)
 
-You can refer to <a href= https://github.com/je-suis-tm/web-scraping/blob/master/CME2.py>CME2</a> for more details. Please note that CME2 is currently the available scraper for Chicago Mercantile Exchange.
+Euronext is still considered an easy one. Sometimes you have to post a form with valid header to get the JSON file. You will see that in the first chapter of advanced level. For more details of JSON, feel free to take a look at <a href= https://github.com/je-suis-tm/web-scraping/blob/master/CME2.py>CME2</a>. Please note that CME2 has replaced CME1 to be the available scraper for Chicago Mercantile Exchange.
 
 #### 3. Regular Expression (SHFE)
 

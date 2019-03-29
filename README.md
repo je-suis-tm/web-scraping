@@ -158,6 +158,41 @@ Euronext is still considered an easy one. Sometimes you have to post a form with
 
 #### 3. Regular Expression (SHFE)
 
+Sometimes, navigate through HTML parse tree may not get you what you need. For instance, you have some information inside a javascript function. You don't really want the whole bloc. All you care about is API key. 
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/shfe%20javascript.png)
+
+Or you got multiple titles. You only care about the numbers inside these titles. You are unable to use array slicing with indices because numbers don't appear in fixed positions. Those numbers can even be negative.
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/shfe%20regex.png)
+
+Helpless, right? Not if you know regular expression! We will call it regex in the following context. Think of regex as another simple language as HTML. In Python, there is a built-in library called `re`. There are a couple of functions inside this module. But for web scraping,  `re.findall` and `re.search` are commonly used. `re.findall` returns a list of all the matched words and `re.search` returns a regex object. We simply apply attribute `re.search('','').group()` to concatenate the text together.
+
+As for the regex itself, there are a few useful tips. `(?<=)` and `(?=)` are my favorite pair. They are called look-ahead and look-behind. If the content you are looking for is always behind a comma and before a question mark. You can simply do
+
+`(?<=\,)\S*(?=\?)`
+
+Punctuation marks have special meanings in regex. If you need to specify comma instead of special meanings, you always remember to put a slash before it. `\S*` refer to all the non-whitespace characters. Characters have no special meanings in regex. But when you put a slash before characters, all of sudden they have special meanings, quite the opposite to punctuation marks. 
+
+The full table of my useful tips is here.
+
+Syntax | Meaning
+------------ | -------
+`\d*` | All the numbers. If we remove asterisk mark, we will only match one digit. Asterisk mark refers to zero or multiple occurence.
+`\w*` | All the characters, numbers and underscore marks
+`\S*` | All the non-whitespace characters
+`-?\d*\,?\d*` | All the numbers, potential negative signs and potential commas. Question mark means the character can be zero or one occurrence.
+`\d{4}` | 4 digits
+`^Tori` | Anything starts with Tori
+`Black$` | Anything ends with Black
+`[a-z0-9]` | Anything involves lower case characters or digits
+`[^A-Z]` | Anything except upper case characters
+`(?<=\,)\S*(?=\?)` | Anything behind a comma and before a question mark
+
+You can check <a href=https://www.w3schools.com/python/python_regex.asp>w3schools</a> for more details on regex syntax. 
+
+In this chapter, the example is to navigate through a JSON file by regex (way faster than pandas dataframe). JSON file is sort of  dictionaries inside dictionaries. Normally we access the value by multiple keys. If you think of JSON file as a tree ADT, we need to know every node (key) from root to parent to go to the child node (value). Now we convert the whole structure to string and search for certain patterns via regex. With look-ahead and look-behind pair, knowing a parent node is fairly sufficient. Please refer to <a href=https://github.com/je-suis-tm/web-scraping/blob/master/SHFE.py>SHFE</a> for coding details.
+
 <br>
 
 ## Advanced

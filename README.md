@@ -199,6 +199,10 @@ In this chapter, the example is to navigate through a JSON file by regex (way fa
 
 #### 1. Sign-in (CQF)
 
+Congrats! I assume you have mastered entry-level web scraping. Since we come to more advanced level, we will have to deal with more complex issues. In this chapter, we will talk about how to sign into a website in Python. Please note that we will only talk about sign in without any captcha or other Turing Test (google’s reCAPTCHA is one of the worst). There are two ways to bypass captcha, manually downloading image or using external package to do image recognition. You will find something useful <a href=https://www.tutorialspoint.com/python_web_scraping/python_web_scraping_processing_captcha.htm>here</a>.
+
+Well, login is no magic. Traditionally it is a process of posting a form of critical information to a certain address. When each piece of information matches the record in database, it will assign a token to you, then you are officially “in”. 
+
 #### 2. Database (LME)
 
 #### 3. Newsfeed (MENA)

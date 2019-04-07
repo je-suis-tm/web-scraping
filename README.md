@@ -203,6 +203,13 @@ Congrats! I assume you have mastered entry-level web scraping. Since we come to 
 
 Well, login is no magic. Traditionally it is a process of posting a form of critical information to a certain address. When each piece of information matches the record in database, it will assign a token to you, then you are officially “in”. 
 
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cqf%20login%20link.PNG)
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cqf%20request%20header.PNG)
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cqf%20post%20form.PNG)
+
+
 #### 2. Database (LME)
 
 #### 3. Newsfeed (MENA)

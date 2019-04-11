@@ -199,13 +199,21 @@ In this chapter, the example is to navigate through a JSON file by regex (way fa
 
 #### 1. Sign-in (CQF)
 
-Congrats! I assume you have mastered entry-level web scraping. Since we come to more advanced level, we will have to deal with more complex issues. In this chapter, we will talk about how to sign into a website in Python. Please note that we will only talk about sign in without any captcha or other Turing Test (google’s reCAPTCHA is one of the worst). There are two ways to bypass captcha, manually downloading image or using external package to do image recognition. You will find something useful <a href=https://www.tutorialspoint.com/python_web_scraping/python_web_scraping_processing_captcha.htm>here</a>.
+Congrats! I assume you have mastered entry-level web scraping. Since we come to more advanced level, we will have to deal with more complex issues. In this chapter, we will talk about how to sign into a website in Python. Please bear in mind that we will only discuss login without any captcha or other Turing Test (google’s reCAPTCHA is one of the worst). It doesn’t mean captcha is the dead end for scraping. There are two ways to bypass captcha, manually downloading image for human recognition or using external package to do image recognition. You will find something <a href=https://www.tutorialspoint.com/python_web_scraping/python_web_scraping_processing_captcha.htm>here</a>.
 
-Well, login is no magic. Traditionally it is a process of posting a form of critical information to a certain address. When each piece of information matches the record in database, it will assign a token to you, then you are officially “in”. 
+Well, login is no magic. Traditionally it is posting a form consists of critical information to a certain address. When each piece of information matches the record in website backend database, the website will assign a token to you. Token is like security clearance. It enables you to visit every content that requires login. Always remember to insert a token into the header when you got one after authentication.
+
+Big companies like Facebook or Twitter use a slightly different approach called CSRF token. The website sends a token to you before sign-in. You will have to carry that token to log in. There will be no more token assigned to you after authentication because the cookies will take care of everything. Think of it as buying TTP in Madrid, once you tap it on the card reader to pass the gate, you do not need it to visit any station or exit the metro system. 
+
+Let’s look at a simple case, a website called CQF. This great website has many free reports and videos on quantitative finance. But, there is always a but, the annoying part is resources are exclusive to registered users. Thus, we will be forced to include the login part in our python scraper. As usual, we always take a quick look at the website before coding. When we log in, we need to inspect element to seek for the login activity (if you forget how to do this, please refer to chapter 2 in the beginner level). There are quite a few activities, right? The easiest way to spot the login is to search your username and password. Usually, they are unhashed. Now that we have located the login activity, there are three key things we need to keep an eye on. The first one is Request URL. It will be the URL we post our form to. 
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cqf%20login%20link.PNG)
 
+The second one will be Request Headers. There are tons of information in the header. Only a small bit of them are genuinely useful to the login. The simple rule is to exclude cookies and anything contains hashed information. These headers can disguise your scrapping as an internet browser. 
+
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cqf%20request%20header.PNG)
+
+The third one will be Form Data. It contains the most critical information for authentication, such as username and password.
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cqf%20post%20form.PNG)
 

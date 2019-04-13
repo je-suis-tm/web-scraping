@@ -221,6 +221,16 @@ The last but not least one will be Form Data. It contains the most critical info
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cqf%20post%20form.PNG)
 
+Once we have gathered everything we need, we can simply do
+
+`session.post(url,headers={iamnotarobot:True},data={username:brazzers,password:i<3ellahughes})`
+
+Usually, the session will automatically update its cookie. And if the website gives a token in its response (CQF does not), we can simply do 
+
+`session.headers.update({token:lanarhodes4avn})`
+
+We have obtained the security clarance now. Quite simple, isn't it? If you crave for a challenge, why don't you start with scrapping private instagram account?
+
 
 #### 2. Database (LME)
 

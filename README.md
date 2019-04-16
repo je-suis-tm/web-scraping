@@ -166,7 +166,7 @@ Or you got multiple titles. You only care about the numbers inside these titles.
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/shfe%20regex.png)
 
-Helpless, right? Not if you know regular expression! We will call it regex in the following context. Think of regex as another simple language as HTML. In Python, there is a built-in library called `re`. There are a couple of functions inside this module. But for web scraping,  `re.findall` and `re.search` are commonly used. `re.findall` returns a list of all the matched words and `re.search` returns a regex object. We simply apply attribute `re.search('','').group()` to concatenate the text together.
+Helpless, right? Not if you know regular expression! We will call it regex in the following context. Think of regex as another simple language as HTML. In Python, there is a built-in library called `re`. There are a couple of functions inside this module. But for web scraping, `re.findall` and `re.search` are commonly used. `re.findall` returns a list of all the matched words and `re.search` returns a regex object. We simply apply attribute `re.search('','').group()` to concatenate the text together.
 
 As for the regex itself, there are a few useful tips. `(?<=)` and `(?=)` are my favorite pair. They are called look-ahead and look-behind. If the content you are looking for is always behind a comma and before a question mark. You can simply do
 
@@ -178,7 +178,7 @@ The full table of my useful tips is here.
 
 Syntax | Meaning
 ------------ | -------
-`\d*` | All the numbers. If we remove asterisk mark, we will only match one digit. Asterisk mark refers to zero or multiple occurence.
+`\d*` | All the numbers. If we remove asterisk mark, we will only match one digit. Asterisk mark refers to zero or multiple occurrence.
 `\w*` | All the characters, numbers and underscore marks
 `\S*` | All the non-whitespace characters
 `-?\d*\,?\d*` | All the numbers, potential negative signs and potential commas. Question mark means the character can be zero or one occurrence.

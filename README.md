@@ -203,15 +203,15 @@ Congrats! I assume you have mastered entry-level web scraping. Since we come to 
 
 Well, login is no magic. Traditionally it is posting a form consists of critical information to a certain address. When each piece of information matches the record in website backend database, the website will assign a token to you. Token is like security clearance. It enables you to visit every content that requires login. Always remember to insert a token into the header when you got one after authentication.
 
-Big companies like Facebook or Twitter use a slightly different approach called CSRF token. The website sends a token to you before sign-in. You will have to carry that token to log in. There will be no more token assigned to you after authentication because the cookies will take care of everything. Think of it as buying TTP in Madrid, once you tap it on the card reader to pass the gate, you do not need it to visit any station or exit the metro system. 
+Big companies like Facebook or Twitter use a slightly different approach called CSRF token. The website sends a token to you before sign-in. It goes without saying that CSRF token must be presented at login. There will be no more token assigned to you after authentication because the cookies will take care of everything. Think of CSRF as buying TTP in Madrid, once you tap it on the card reader to pass the gate, you do not need it to visit any station or exit the metro system. 
 
-Let’s look at a simple case, a website called CQF. This great website features many free reports and videos on quantitative finance. But, there is always a but, the annoying part is resources are exclusive to registered users. Thus, we will be forced to include the login part in our python scraper. As usual, we always take a quick look at the website before coding. When we log in, we need to inspect element to seek for the login activity (if you forget how to do this, please refer to chapter 2 in the beginner level). There are quite a few activities when we log in, right? The quickest way to distinguish the login from the rest is to search your username and password. Usually, username and password are unhashed. 
+Let’s look at a simple case, a website called CQF. This great website features many free reports and videos on quantitative finance. But, there is always a but, the annoying part is resources are exclusive to registered users. Thus, we will be forced to include the login part in our python scraper. As usual, we always take a quick look at the website before coding. When we log in, we need to inspect element to seek for the login activity (if you forget how to do this, please refer to chapter 2 in the beginner level). There are quite a few activities when we log in, right? The quickest way to distinguish the login from the rest is to search your username and password. Because username and password are normally unhashed. 
 
 Now that we have located the login activity, there are three key things we need to keep an eye on. The first one is Request URL. It will be the URL we post our form to. Pay attention to Request Method. The login is often POST method, rather than GET method.
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cqf%20login%20link.PNG)
 
-The second one will be Request Headers. Headers are great tools to disguise your scrapping as an internet browser. We can observe tons of information in the headers. Though only a small bit of them are genuinely useful to the login. The simple rule is to exclude cookies and anything contains hashed information. If you accidentally exclude some key headers, you may trigger the alarm of the website and end up with some form of captcha. So we can never be too careful with our headers.
+The second one will be Request Headers. Headers are great tools to disguise your scraping as an internet browser. We can observe tons of information in the headers. Though only a small bit of them are genuinely useful to the login. An effective way is to exclude cookies and anything contains hashed information. If you accidentally exclude some key headers, you may trigger the alarm of the website and end up with some form of captcha. So we can never be too careful with our headers.
 
 *My apologies for the redaction in these headers. The redaction is here to protect my privacy and act like some confidential documents from MI6.*
 
@@ -223,13 +223,13 @@ The last but not least one will be Form Data. It contains the most critical info
 
 Once we have gathered everything we need, we can simply do
 
-`session.post(url,headers={iamnotarobot:True},data={username:brazzers,password:i<3ellahughes})`
+`session.post(url,headers={'iamnotarobot':True},data={'username':'lanarhodes4avn','password':'i<3ellahughes'})`
 
-Usually, the session will automatically update its cookie. And if the website gives a token in its response (CQF does not), we can simply do 
+The session will automatically update its cookie after posting a form. Generally speaking, the website gives a token in return (CQF does not). And the response is likely to be in JSON format, then we do 
 
-`session.headers.update({token:lanarhodes4avn})`
+`session.headers.update({'token':response.json()['token']})`
 
-We have obtained the security clarance now. Quite simple, isn't it? If you crave for a challenge, why don't you start with scrapping private instagram account?
+We have obtained the security clearance now. We can snoop around every corner as we please. Quite simple, isn't it? For more details, feel free to click <a href=https://github.com/je-suis-tm/web-scraping/blob/master/CQF.py>CQF</a>. If you crave for a bigger challenge, why don't you start with scraping a private instagram account?
 
 
 #### 2. Database (LME)

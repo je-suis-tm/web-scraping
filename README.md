@@ -225,11 +225,7 @@ There is another part called Query String Parameters. We do not encounter it ver
 
 Once we have gathered everything we need, we can simply do
 
-`session.post(url,headers={'iamnotarobot':True}, \`
-
-`             data={'username':'lanarhodes4avn','password':'i<3ellahughes'}, \`
-
-`             params={'id':'jia.lissa'})`
+`session.post(url,headers={'iamnotarobot':True},data={'username':'lanarhodes4avn','password':'i<3ellahughes'},params={'id':'jia.lissa'})`
 
 The session will automatically update its cookie after posting a form. Generally speaking, the website gives a token in return (CQF does not). And the response is likely to be in JSON format, then we do 
 

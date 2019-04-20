@@ -223,6 +223,8 @@ The last but not least one will be Form Data. It contains the critical informati
 
 There is another part called Query String Parameters. We do not encounter it very often at login. It is more frequently seen in data query though.
 
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cqf%20query.PNG)
+
 Once we have gathered everything we need, we can simply do
 
 `session.post(url,headers={'iamnotarobot':True},data={'username':'lanarhodes4avn','password':'i<3ellahughes'},params={'id':'jia.lissa'})`

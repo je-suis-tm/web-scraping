@@ -6,7 +6,7 @@
 
 ## Intro
 
-My understanding of web scraping is patience and attention to details. Scraping is not rocket science (deep learning is). When I do scraping, I typically spend 50% of my time in analyzing the source (navigate through HTML parse tree or inspect element to find the post form) and the rest 50% in ETL. The process does not require much brain power but it is quite time-consuming. Again, patience and attention to details matter. 
+My understanding of web scraping is patience and attention to details. Scraping is not rocket science (deep learning is). When I do scraping, I typically spend 50% of my time in analyzing the source (navigate through HTML parse tree or inspect element to find the post form) and the rest 50% in ETL. The most useful tools for me are `requests`, `bs4` and `re`. Some people may recommend `selenium` for non-static website. To be honest, even I have never used `selenium` throughout my career, fynamic websites like Facebook and Twitter are still within my grasp. Again, patience and attention to details matter. 
 
 This repository contains a couple of python web scrapers. These scrapers mainly target at different commodity future exchanges and influential media websites (or so-called fake news, lol). Most scripts were written during my early days of Python learning. Since this repository gained unexpected popularity, I have restructured everything to make it more user-friendly. All the scripts featured in this repository are ready for use. Each script is designed to feature a unique technique that I found useful throughout my experience of data engineering. 
 
@@ -201,7 +201,7 @@ In this chapter, the example is to navigate through a JSON file by regex (way fa
 
 Congrats! I assume you have mastered entry-level web scraping. Since we come to more advanced level, we will have to deal with more complex issues. In this chapter, we will talk about how to sign into a website in Python. Please bear in mind that we will only discuss login without any captcha or other Turing Test (google’s reCAPTCHA is one of the worst). It doesn’t mean captcha is the dead end for scraping. There are two ways to bypass captcha, manually downloading image for human recognition or using external package to do image recognition. You will find something <a href=https://www.tutorialspoint.com/python_web_scraping/python_web_scraping_processing_captcha.htm>here</a>.
 
-Well, login is no magic. Traditionally it is posting a form consists of critical information to a certain address. When each piece of information matches the record in website backend database, the website will assign a token to you. Token is like security clearance. It enables you to visit every content that requires login. Always remember to insert a token into the header when you got one after authentication.
+Well, login is no magic. Traditionally it is posting a form consists of critical information to a certain address. When each piece of information matches the record in website backend database, the website will assign a token to you. Token is like security clearance. It enables you to visit the content that requires login. Always remember to insert a token into the header when you got one after authentication.
 
 Big companies like Facebook or Twitter use a slightly different approach called CSRF token. The website sends a token to you before sign-in. It goes without saying that CSRF token must be presented at login. There will be no more token assigned to you after authentication because the cookies will take care of everything. Think of CSRF as buying TTP in Madrid, once you tap it on the card reader to pass the gate, you do not need it to visit any station or exit the metro system. 
 
@@ -211,19 +211,25 @@ Now that we have located the login activity, there are three key things we need 
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cqf%20login%20link.PNG)
 
-The second one will be Request Headers. Headers are great tools to disguise your scraping as an internet browser. We can observe tons of information in the headers. Though only a small bit of them are genuinely useful to the login. An effective way is to exclude cookies and anything contains hashed information. If you accidentally exclude some key headers, you may trigger the alarm of the website and end up with some form of captcha. So we can never be too careful with our headers.
+The second one will be Request Headers. Headers are great tools to disguise your scraping as an internet browser. They are called headers because you would spend most of your time scratching your head to get them right. We can observe tons of information in the headers. Only a small bit of them are genuinely useful to the login. An effective way is to exclude cookies and anything contains hashed information. Nonetheless, this is not always the case. Some websites filter out machines by valid cookies with hashed information for login. If you accidentally exclude those headers, you may trigger the alarm of the website and end up with some form of captcha.
 
-*My apologies for the redaction in these headers. The redaction is here to protect my privacy and act like some confidential documents from MI6.*
+*My apologies for the redaction in these headers. The redaction plays a vital role here to protect my privacy. It turns my headers into some confidential documents from MI6.*
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cqf%20request%20header.PNG)
 
-The last but not least one will be Form Data. It contains the most critical information for authentication, such as username and password.
+The last but not least one will be Form Data. It contains the critical information for authentication, such as username and password. 
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cqf%20post%20form.PNG)
 
+There is another part called Query String Parameters. We do not encounter it very often at login. It is more frequently seen in data query though.
+
 Once we have gathered everything we need, we can simply do
 
-`session.post(url,headers={'iamnotarobot':True},data={'username':'lanarhodes4avn','password':'i<3ellahughes'})`
+`session.post(url,headers={'iamnotarobot':True}, \
+<br>
+data={'username':'lanarhodes4avn','password':'i<3ellahughes'}, \
+<br>
+params={'id':'jia.lissa'})`
 
 The session will automatically update its cookie after posting a form. Generally speaking, the website gives a token in return (CQF does not). And the response is likely to be in JSON format, then we do 
 

@@ -2,10 +2,10 @@
 
 #this script is about the latest news of MENA region
 #we scrape different influential media websites, or so-called fake news, lol
-#and send only updates to the mailbox for daily newsfeed
+#and send only updates to the mailbox for daily newsletter
 #in order to do that, we need a db to store all the historical content of websites
 #and all the scraping techniques from html parse tree to regular expression
-#over time, i also discovered the issue of information overload in daily newsfeed
+#over time, i also discovered the issue of information overload in daily newsletter
 #hence, i invented a graph theory based algorithm to extract key information
 #a part of this algo will also be featured in this script to solve info redundancy
 #as u can see, this is the most advanced script in web scraping repository
@@ -176,7 +176,7 @@ def send(html):
     #this is a requirement of outlook
     mail.To = ';'.join(receivers) 
     
-    mail.Subject ='Mid East Newsfeed %s'%(dt.datetime.now())
+    mail.Subject ='Mid East Newsletter %s'%(dt.datetime.now())
     mail.BodyFormat=2
     
     #use html to make email looks more elegant
@@ -236,7 +236,7 @@ def database(df):
             #we can utilize the nature of database to pick out the latest information
             #every successful insertion into the database also goes to the output
             #at the end, output contains nothing but latest updates of websites
-            #that is what we call newsfeed
+            #that is what we call newsletter
             temp.append(i)
             
         except Exception as e:

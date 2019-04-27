@@ -30,7 +30,7 @@ Scripts inside this repository are classified into two groups, beginner and adva
 
 <a href=https://github.com/je-suis-tm/web-scraping#2-database-lme>2. Database (LME)</a>
 
-<a href=https://github.com/je-suis-tm/web-scraping#3-newsfeed-mena>3. Newsfeed (MENA)</a>
+<a href=https://github.com/je-suis-tm/web-scraping#3-newsletter-mena>3. Newsletter (MENA)</a>
 
 #### Notes
 
@@ -42,23 +42,23 @@ Scripts inside this repository are classified into two groups, beginner and adva
 
 ## Available Scrapers
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>1. Wall Street Journal WSJ</a>
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>1. Wall Street Journal WSJ</a>
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>2. Financial Times FT</a>
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>2. Financial Times FT</a>
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>3. Bloomberg</a>
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>3. Bloomberg</a>
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>4. Thompson Reuters</a>
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>4. Thompson Reuters</a>
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>5. Al Jazeera AJ</a>
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>5. Al Jazeera AJ</a>
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>6. British Broadcasting Corporation BBC</a>
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>6. British Broadcasting Corporation BBC</a>
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>7. Fortune</a>
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>7. Fortune</a>
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>8. Cable News Network CNN</a>
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>8. Cable News Network CNN</a>
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsfeed.py>9. The Economist</a>
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>9. The Economist</a>
 
 <a href=https://github.com/je-suis-tm/web-scraping/blob/master/LME.py>10. London Metal Exchange LME</a>
 
@@ -238,7 +238,7 @@ We have obtained the security clearance now. We can snoop around every corner as
 
 #### 2. Database (LME)
 
-#### 3. Newsfeed (MENA)
+#### 3. Newsletter (MENA)
 
 <br>
 

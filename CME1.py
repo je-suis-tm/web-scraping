@@ -25,7 +25,8 @@ def scrape(category_name,commodity_name):
     
     #cme officially forbids scraping
     #so a header must be used for disguise as an internet browser
-    #they say no scraping but actually leave a backdoor for us, thx CME
+    #the developers say no to scraping, it appears to be so
+    #but actually they turn a blind eye to us, thx
     #i need different types of commodity
     #so i need to format the website for each commodity
     req=u.Request('http://www.cmegroup.com/trading/metals/%s/%s.html'%(

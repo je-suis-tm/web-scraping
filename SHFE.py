@@ -23,7 +23,7 @@ Created on Thu Mar 29 10:48:35 2018
 #we can still convert response.content to string first
 #and apply regex to extract what we need later
 #regex in python is the same as regex in any other languages
-#the rules of regex is basically universal
+#the rules of regex syntax are basically universal
 #check the link below to see more details of regex
 # https://www.w3schools.com/python/python_regex.asp
 import requests
@@ -34,8 +34,9 @@ import os
 os.chdir('H:/')
 
 
-#this funtion is to format the date
+#this function is to format the date
 #the date format of SHFE is yyyymmdd
+#alternatively, u can use strftime
 def format_date():
     
     year=str(dt.datetime.now().year)

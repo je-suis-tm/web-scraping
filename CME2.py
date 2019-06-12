@@ -85,7 +85,7 @@ def etl(commodity_code,commodity_name):
     #if you dont like the structure
     #you can use pd.read_json with orient as a key argument
     #you can choose from index, columns, values, split, records
-    df=pd.DataFrame(response.json(),dtype=str)
+    df=pd.DataFrame(response.json())
     
     #pandas turns json into a dataframe
     #still, for df['quotes']

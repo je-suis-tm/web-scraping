@@ -249,6 +249,31 @@ To create a database, we simply do
 <br>
 `c = conn.cursor()`
 
+The above command would create a database if it does not exist in a given directory. If it exists, it will automatically connect to the database instead. 
+
+Next step is to create a table in the database, we can do
+
+`c.execute("""CREATE TABLE table_name ([column1] DATATYPE, [column2] DATATYPE, [column3] DATATYPE, PRIMARY KEY ([column1], [column2], [column3]));""")`
+
+`conn.commit()`
+
+Some key notes
+* An interesting feature of SQL is its case insensitivity. Still, the upper case letters make things more distinguishable. The brackets `[]` serve the same purpose.
+* For some reason, sqlite3 requests `;` at the end of each SQL command.
+* Always remember to commit changes to database. Think of it as a pop up window to ask you if you want to save all the changes and you click HELL YEAH.
+* The data types in SQL are very sophisticated and precise. Unless your duty is to maintain the efficiency of the database, I'd suggest you go with python data types such as 'FLOAT','DATE','TEXT'.
+* Primary key is crucial to your data integrity. Primary key guarantees the uniqueness of the datasets. For instance, if the website modifies one historical data point, without the primary key constraint, we could end up with two values for the same period. With the primary key constraint, we can update the old value to skip any data corruption. 
+* Only one primary key is allowed in each table (or no primary key at all). Even though, primary key can involve multiple columns, like the above statement.
+
+Now that tables are set up, let's insert some scraped data into the database, we can do
+
+`c.execute("""INSERT INTO table_name VALUES (?,?,?,?)""",[data1,data2,data3,data4])`
+
+`conn.commit()`
+
+`conn.close()`
+
+We should not forget the last statement. SQLite3 database does not allow multiple modification at the same time. Other users cannot make changes inside the table if we don't close the database, similar to Excel in a way. 
 
 #### 3. Newsletter (MENA)
 

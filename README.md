@@ -254,7 +254,7 @@ The above command would create a database if it does not exist in a given direct
 Next step is to create a table in the database, we can do
 
 `c.execute("""CREATE TABLE table_name ([column1] DATATYPE, [column2] DATATYPE, [column3] DATATYPE, PRIMARY KEY ([column1], [column2], [column3]));""")`
-
+<br>
 `conn.commit()`
 
 Some key notes
@@ -268,9 +268,9 @@ Some key notes
 Now that tables are set up, let's insert some scraped data into the database, we can do
 
 `c.execute("""INSERT INTO table_name VALUES (?,?,?,?)""",[data1,data2,data3,data4])`
-
+<br>
 `conn.commit()`
-
+<br>
 `conn.close()`
 
 We should not forget the last statement. SQLite3 database does not allow multiple modification at the same time. Other users cannot make changes inside the table if we don't close the database, similar to Excel in a way. 

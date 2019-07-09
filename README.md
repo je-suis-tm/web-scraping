@@ -273,7 +273,36 @@ Now that tables are set up, let's insert some scraped data into the database, we
 <br>
 `conn.close()`
 
-We should not forget the last statement. SQLite3 database does not allow multiple modification at the same time. Other users cannot make changes inside the table if we don't close the database, similar to Excel in a way. 
+We should not forget the last statement. SQLite3 database does not allow multiple modification at the same time. Other users cannot make changes inside the table if we don't close the database, similar to Excel in a way.
+
+To make query directly from database, we do
+
+`c=conn.cursor()`
+<br>
+`c.execute(“““SELECT * FROM table_name WHERE [column1]=value1;”””)`
+<br>
+`rows=c.fetchall()`
+<br>
+`conn.commit()`
+
+The above is a conventional query method in sqlite3. However, pandas provide a much more convenient way. The output goes straight into dataframe instead of tuples within a list. Easy peasy lemon squeezy! 
+
+`df=pd.read_sql(“““SELECT * FROM table_name WHERE [column1]=value1”””,conn)`
+
+One of the very common issues from query is encoding. Unfortunately, I haven’t managed to solve it so far. Though there is a way to get around like this
+
+`'C\'était des loques qui se traînaient'.encode('latin-1').decode('ISO-8859-1')`
+
+There are other useful SQL sentences as well. For more details, you can check <a href=https://www.w3schools.com/sql>w3schools</a>. I personally believe fluency in `SELECT`, `DELETE`, `UPDATE` and `INSERT` is enough to cover most of your daily tasks, unless you aim to be a data architect dealing with numerous schemas.
+
+Some other useful statements including
+
+`UPDATE table_name SET [column1]=value1`
+<br>
+`DELETE FROM table_name WHERE [column1]=value1`
+
+Feel free to take a look at <a href= https://github.com/je-suis-tm/web-scraping/blob/master/LME.py>LME</a> for more coding details.
+
 
 #### 3. Newsletter (MENA)
 

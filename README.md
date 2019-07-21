@@ -88,15 +88,18 @@ It is vital to understand the basics of HTML parse tree because most websites wi
 
 For instance, we would love to get the link to the quiz on Dragon Ball, we can do
 
-`result.find(‘div’,class_=’article article__list old__article-square’).find(‘a’).get(‘href’)`
+```python
+result.find(‘div’,class_=’article article__list old__article-square’).find(‘a’).get(‘href’)
+```
 
 Here, result is a BeautifulSoup object. The attribute `find` returns the first matched tag. The attribute `get` enables us to seek for attributes inside a tag.
 
 Or we are interested in all the titles of the articles, we do
 
-`temp=result.find(‘div’,class_=’article article__list old__article-square’).find_all(‘a’)` 
-
-`output=[i.text for i in temp]`
+```python
+temp=result.find(‘div’,class_=’article article__list old__article-square’).find_all(‘a’)
+output=[i.text for i in temp]
+```
 
 The attribute `find_all` returns all the matched results. `.text` attribute automatically gets all `str` values inside the current tag. The second article has a subtitle ‘subscriber only’. So we will have a rather longer title for the second article compared to the rest. 
 
@@ -114,21 +117,20 @@ Reading a JSON file in Python is straight forward. There are two ways.
 
 There is a default package just called json, you can do
 
-`import json`
-
-`with open('data.json') as f:`
-
-`	data = json.load(f)`
-
-`print(data)`
+```python
+import json
+with open('data.json') as f:
+  data = json.load(f)
+print(data)
+```
 
 Nevertheless, I propose a much easier way. We can parse the content to pandas and treat it like a dataframe. You can do
 
-`import pandas as pd`
-
-`df=pd.read_json('data.json')`
-
-`print(df)`
+```python
+import pandas as pd
+df=pd.read_json('data.json')
+print(df)
+```
 
 Reading JSON is not really the main purpose of this chapter. What really made me rewrite the scraper for CME is the change of website structure. In April 2018, I could not extract data from searching for HTML tags any more. I came to realize that CME created a dynamic website by JavaScript. The great era of BeautifulSoup was water under the bridge. At this critical point of either adapt or die, I had to find out where the data came from and develop a new script. Guess where?
 
@@ -170,7 +172,9 @@ Helpless, right? Not if you know regular expression! We will call it regex in th
 
 As for the regex itself, there are a few useful tips. `(?<=)` and `(?=)` are my favorite pair. They are called look-ahead and look-behind. If the content you are looking for is always behind a comma and before a question mark. You can simply do
 
-`(?<=\,)\S*(?=\?)`
+```regex
+(?<=\,)\S*(?=\?)
+```
 
 Punctuation marks have special meanings in regex. If you need to specify comma instead of special meanings, you always remember to put a slash before it. `\S*` refer to all the non-whitespace characters. Characters have no special meanings in regex. But when you put a slash before characters, all of sudden they have special meanings, quite the opposite to punctuation marks. 
 
@@ -227,11 +231,15 @@ There is another part called Query String Parameters. We do not encounter it ver
 
 Once we have gathered everything we need, we can simply do
 
-`session.post(url,headers={'iamnotarobot':True},data={'username':'lanarhodes4avn','password':'i<3ellahughes'},params={'id':'jia.lissa'})`
+```python
+session.post(url,headers={'iamnotarobot':True},data={'username':'lanarhodes4avn','password':'i<3ellahughes'},params={'id':'jia.lissa'})
+```
 
 The session will automatically update its cookie after posting a form. Generally speaking, the website gives a token in return (CQF does not). And the response is likely to be in JSON format, then we do 
 
-`session.headers.update({'token':response.json()['token']})`
+```python
+session.headers.update({'token':response.json()['token']})
+```
 
 We have obtained the security clearance now. We can snoop around every corner as we please. Quite simple, isn't it? For more details, feel free to click <a href=https://github.com/je-suis-tm/web-scraping/blob/master/CQF.py>CQF</a>. If you crave for a bigger challenge, why don't you start with scraping a private instagram account?
 
@@ -245,17 +253,19 @@ Enough of sales pitch, let’s get into the technical details of database. The p
 
 To create a database, we simply do
 
-`conn = sqlite3.connect('database.db')`
-<br>
-`c = conn.cursor()`
+```python
+conn = sqlite3.connect('database.db')
+c = conn.cursor()
+```
 
 The above command would create a database if it does not exist in a given directory. If it exists, it will automatically connect to the database instead. 
 
 Next step is to create a table in the database, we can do
 
-`c.execute("""CREATE TABLE table_name ([column1] DATATYPE, [column2] DATATYPE, [column3] DATATYPE, PRIMARY KEY ([column1], [column2], [column3]));""")`
-<br>
-`conn.commit()`
+```python
+c.execute("""CREATE TABLE table_name ([column1] DATATYPE, [column2] DATATYPE, [column3] DATATYPE, PRIMARY KEY ([column1], [column2], [column3]));""")
+conn.commit()
+```
 
 Some key notes
 * An interesting feature of SQL is its case insensitivity. Still, the upper case letters make things more distinguishable. The brackets `[]` serve the same purpose.
@@ -267,39 +277,43 @@ Some key notes
 
 Now that tables are set up, let's insert some scraped data into the database, we can do
 
-`c.execute("""INSERT INTO table_name VALUES (?,?,?,?)""",[data1,data2,data3,data4])`
-<br>
-`conn.commit()`
-<br>
-`conn.close()`
+```python
+c.execute("""INSERT INTO table_name VALUES (?,?,?,?)""",[data1,data2,data3,data4])
+conn.commit()
+conn.close()
+```
 
 We should not forget the last statement. SQLite3 database does not allow multiple modification at the same time. Other users cannot make changes inside the table if we don't close the database, similar to Excel in a way.
 
 To make query directly from database, we do
 
-`c=conn.cursor()`
-<br>
-`c.execute(“““SELECT * FROM table_name WHERE [column1]=value1;”””)`
-<br>
-`rows=c.fetchall()`
-<br>
-`conn.commit()`
+```python
+c=conn.cursor()
+c.execute(“““SELECT * FROM table_name WHERE [column1]=value1;”””)
+rows=c.fetchall()
+conn.commit()
+```
 
 The above is a conventional query method in sqlite3. However, pandas provide a much more convenient way. The output goes straight into dataframe instead of tuples within a list. Easy peasy lemon squeezy! 
 
-`df=pd.read_sql(“““SELECT * FROM table_name WHERE [column1]=value1”””,conn)`
+```python
+df=pd.read_sql(“““SELECT * FROM table_name WHERE [column1]=value1”””,conn)
+```
 
 One of the very common issues from query is encoding. Unfortunately, I haven’t managed to solve it so far. Though there is a way to get around like this
 
-`'C\'était des loques qui se traînaient'.encode('latin-1').decode('ISO-8859-1')`
+```python
+'C\'était des loques qui se traînaient'.encode('latin-1').decode('ISO-8859-1')
+```
 
 There are other useful SQL sentences as well. For more details, you can check <a href=https://www.w3schools.com/sql>w3schools</a>. I personally believe fluency in `SELECT`, `DELETE`, `UPDATE` and `INSERT` is enough to cover most of your daily tasks, unless you aim to be a data architect dealing with numerous schemas.
 
 Some other useful statements including
 
-`UPDATE table_name SET [column1]=value1`
-<br>
-`DELETE FROM table_name WHERE [column1]=value1`
+```sql
+UPDATE table_name SET [column1]=value1
+DELETE FROM table_name WHERE [column1]=value1
+```
 
 Feel free to take a look at <a href= https://github.com/je-suis-tm/web-scraping/blob/master/LME.py>LME</a> for more coding details.
 

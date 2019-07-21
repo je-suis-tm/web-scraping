@@ -232,7 +232,10 @@ There is another part called Query String Parameters. We do not encounter it ver
 Once we have gathered everything we need, we can simply do
 
 ```python
-session.post(url,headers={'iamnotarobot':True},data={'username':'lanarhodes4avn','password':'i<3ellahughes'},params={'id':'jia.lissa'})
+session.post(url,headers={'iamnotarobot':True},
+             data={'username':'lanarhodes4avn',
+                   'password':'i<3ellahughes'},
+             params={'id':'jia.lissa'})
 ```
 
 The session will automatically update its cookie after posting a form. Generally speaking, the website gives a token in return (CQF does not). And the response is likely to be in JSON format, then we do 
@@ -263,7 +266,11 @@ The above command would create a database if it does not exist in a given direct
 Next step is to create a table in the database, we can do
 
 ```python
-c.execute("""CREATE TABLE table_name ([column1] DATATYPE, [column2] DATATYPE, [column3] DATATYPE, PRIMARY KEY ([column1], [column2], [column3]));""")
+c.execute("""
+          CREATE TABLE table_name 
+          ([column1] DATATYPE, [column2] DATATYPE, [column3] DATATYPE,
+          PRIMARY KEY ([column1], [column2], [column3]));
+          """)
 conn.commit()
 ```
 

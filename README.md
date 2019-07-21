@@ -89,7 +89,7 @@ It is vital to understand the basics of HTML parse tree because most websites wi
 For instance, we would love to get the link to the quiz on Dragon Ball, we can do
 
 ```python
-result.find(‘div’,class_=’article article__list old__article-square’).find(‘a’).get(‘href’)
+result.find('div',class_='article article__list old__article-square').find('a').get('href')
 ```
 
 Here, result is a BeautifulSoup object. The attribute `find` returns the first matched tag. The attribute `get` enables us to seek for attributes inside a tag.
@@ -97,7 +97,7 @@ Here, result is a BeautifulSoup object. The attribute `find` returns the first m
 Or we are interested in all the titles of the articles, we do
 
 ```python
-temp=result.find(‘div’,class_=’article article__list old__article-square’).find_all(‘a’)
+temp=result.find('div',class_='article article__list old__article-square').find_all('a')
 output=[i.text for i in temp]
 ```
 
@@ -296,7 +296,7 @@ To make query directly from database, we do
 
 ```python
 c=conn.cursor()
-c.execute(“““SELECT * FROM table_name WHERE [column1]=value1;”””)
+c.execute("""SELECT * FROM table_name WHERE [column1]=value1;""")
 rows=c.fetchall()
 conn.commit()
 ```
@@ -304,7 +304,7 @@ conn.commit()
 The above is a conventional query method in sqlite3. However, pandas provide a much more convenient way. The output goes straight into dataframe instead of tuples within a list. Easy peasy lemon squeezy! 
 
 ```python
-df=pd.read_sql(“““SELECT * FROM table_name WHERE [column1]=value1”””,conn)
+df=pd.read_sql("""SELECT * FROM table_name WHERE [column1]=value1""",conn)
 ```
 
 One of the very common issues from query is encoding. Unfortunately, I haven’t managed to solve it so far. Though there is a way to get around like this

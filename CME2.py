@@ -99,6 +99,7 @@ def etl(commodity_code,commodity_name):
     output['prior settle']=[i['priorSettle'] for i in df['quotes']]
     output['expiration date']=[i['expirationDate'] for i in df['quotes']]
     output['volume']=[i['volume'] for i in df['quotes']]
+    output['volume']=output['volume'].replace(',','').astype(float)
     output['name']=commodity_name
     output['front month']=output['volume']==max(output['volume'])
     

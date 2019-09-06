@@ -91,13 +91,25 @@ For instance, we would love to get the link to the quiz on Dragon Ball, we can d
 ```python
 result.find('div',class_='article article__list old__article-square').find('a').get('href')
 ```
+or
+
+```python
+result.find('div',attrs={'class':'article article__list old__article-square'}).find('a').get('href')
+```
 
 Here, result is a BeautifulSoup object. The attribute `find` returns the first matched tag. The attribute `get` enables us to seek for attributes inside a tag.
 
-Or we are interested in all the titles of the articles, we do
+If we are interested in all the titles of the articles, we do
 
 ```python
 temp=result.find('div',class_='article article__list old__article-square').find_all('a')
+output=[i.text for i in temp]
+```
+
+or
+
+```python
+temp=result.find('div',attrs={'class':'article article__list old__article-square'}).find_all('a')
 output=[i.text for i in temp]
 ```
 

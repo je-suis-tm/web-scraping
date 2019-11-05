@@ -354,7 +354,7 @@ Proxy, it has always been associated with censorship. It is commonly used to acc
 It goes without saying how important proxy URL is. Protocol is usually `http` but occasionally `https`. Domain could be a bunch of number (e.g. 192.168.1.1) or a normal one (e.g. myproxy.com). As for the port, it can only be numbers (e.g. 8080).
 If you don’t have URL information, you can always try to check Local Area Network Settings. Assuming you are using Windows, you can go to internet options in IE (in windows 10, you can find it in Windows Settings - Network & Internet - Proxy)
 
-![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/proxy%20ie.PNG)
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/proxy%20ie.png)
 
 Click connections on the top panel then click LAN settings
 

@@ -345,8 +345,6 @@ Feel free to take a look at <a href= https://github.com/je-suis-tm/web-scraping/
 
 #### 1. Proxy Authentication
 
-#### 2. Ethics
-
 Proxy, it has always been associated with censorship. It is commonly used to access the websites blocked by some parties (e.g. governments) or it is enforced by some parties (e.g. corporates) for the purpose of surveillance. Either way, it is against liberté. Yet, it’s not my place to make a moral judgement. For whatever reason to use proxy, the authentication can become a huge pain in the ass. I have literally spent hours scratching my head to figure out why my code doesn’t work. Here are a few key points to make our life easier.
 
 ###### URL Protocol, Domain and Port
@@ -400,3 +398,4 @@ Now we can harness the power of web-scraping!
 session.get('https://www.lepoint.fr/gastronomie/')
 ```
 
+#### 2. Ethics

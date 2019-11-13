@@ -400,4 +400,3 @@ session.get('https://www.lepoint.fr/gastronomie/')
 
 #### 2. Ethics
 
-Is web scaping legal? Technically speaking, it is in a grey area. It is no different from visiting a website via browser unless we are talking about a large scale. 

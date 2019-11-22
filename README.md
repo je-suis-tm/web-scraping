@@ -36,7 +36,7 @@ Scripts inside this repository are classified into two groups, beginner and adva
 
 <a href=https://github.com/je-suis-tm/web-scraping#1-proxy-authentication>1. Proxy Authentication</a>
 
-<a href=https://github.com/je-suis-tm/web-scraping#2-ethics>2. Ethics</a>
+<a href=https://github.com/je-suis-tm/web-scraping#2-legality>2. Legality</a>
 
 <br>
 
@@ -398,7 +398,7 @@ Now we can harness the power of web-scraping!
 session.get('https://www.lepoint.fr/gastronomie/')
 ```
 
-#### 2. Ethics
+#### 2. Legality
 
 The purpose of web scraping is to extract online data in a large scale by automation. Nevertheless, some of the website content may be under copyright protection called <a href=https://en.wikipedia.org/wiki/Digital_Millennium_Copyright_Act>Digital Millennium Copyright Act</a> (even pornography is protected by DMCA). This adds a little complication to our projects. Even open source data is subjected to fair use, yet the interpretation of fair use is always trivial. There have been many lawsuits around web scraping. Sometimes the scrapers lose sometimes the scrapers win. The actual verdict varies case by case. Law is equal to anyone. Except those with deep pockets are more equal than the others. Nobody really wants to be that sucker who pays the fine. I am not licensed to offer any practical legal counselling but I do have a couple of useful hints for you.
 

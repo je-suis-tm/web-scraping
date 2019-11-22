@@ -403,11 +403,15 @@ session.get('https://www.lepoint.fr/gastronomie/')
 The purpose of web scraping is to extract online data in a large scale by automation. Nevertheless, some of the website content may be under copyright protection called <a href=https://en.wikipedia.org/wiki/Digital_Millennium_Copyright_Act>Digital Millennium Copyright Act</a> (even pornography is protected by DMCA). This adds a little complication to our projects. Even open source data is subjected to fair use, yet the interpretation of fair use is always trivial. There have been many lawsuits around web scraping. Sometimes the scrapers lose sometimes the scrapers win. The actual verdict varies case by case. Law is equal to anyone. Except those with deep pockets are more equal than the others. Nobody really wants to be that sucker who pays the fine. I am not licensed to offer any practical legal counselling but I do have a couple of useful hints for you.
 
 ###### Disclaimer
+
 In most cases, you can find terms of web scraping in the declaration of the content rights or other similar legal sections. These terms are long, sophisticated and incomprehensible (insert the joke here, can you speak English :grin: ). The most straightforward way is to add `/robots.txt` behind any website domain. You will find out the policy set by the website administrator. Usually it tells you what the restrictions are.
 
 For instance
 
 https://www.lemonde.fr/robots.txt
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/legality.PNG)
+
 
 In English, all user agents (*  refers to all) are allowed for the following 2 sub directories.
 

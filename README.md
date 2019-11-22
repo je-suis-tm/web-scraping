@@ -1,7 +1,5 @@
 # Web Scraping
 
-*The readme is still under renovation. Please be patient as I am quite busy (lazy) at the moment. Veuillez patienter. Merci beaucoup!*
-
 <br>
 
 ## Intro

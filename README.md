@@ -8,7 +8,7 @@ My understanding of web scraping is patience and attention to details. Scraping 
 
 This repository contains a couple of python web scrapers. These scrapers mainly target at different commodity future exchanges and influential media websites (or so-called fake news, lol). Most scripts were written during my early days of Python learning. Since this repository gained unexpected popularity, I have restructured everything to make it more user-friendly. All the scripts featured in this repository are ready for use. Each script is designed to feature a unique technique that I found useful throughout my experience of data engineering. 
 
-Scripts inside this repository are classified into two groups, beginner and advanced. At the beginning, the script is merely about some technique to extract the data. As you progress, the script leans more towards data architect and other functions to improve the end product. If you are experienced or simply come to get scrapers for free, you may want to skip the content and just look at <a href= https://github.com/je-suis-tm/web-scraping#available-scrapers>available scrapers</a>. If you are here to learn, you may look at <a href= https://github.com/je-suis-tm/web-scraping#table-of-contents>table of contents</a> to determine which suits you best. In addition, there are some <a href= https://github.com/je-suis-tm/web-scraping#notes>notes</a> on the annoying issues such as proxy authentication (usually corporate or university network) and legality (hopefully you won’t come to that).
+Scripts inside this repository are classified into two groups, beginner and advanced. At the beginning, the script is merely about some technique to extract the data. As you progress, the script leans more towards data architect and other functions to improve the end product. If you are experienced or simply come to get scrapers for free, you may want to skip the content and just look at <a href= https://github.com/je-suis-tm/web-scraping#available-scrapers>available scrapers</a>. If you are here to learn, you may look at <a href= https://github.com/je-suis-tm/web-scraping#table-of-contents>table of contents</a> to determine which suits you best. In addition, there are some <a href= https://github.com/je-suis-tm/web-scraping#notes>notes</a> on the annoying issues such as proxy authentication (usually corporate or university network) and legality (hopefully you won't come to that).
 
 <br>
 
@@ -111,7 +111,7 @@ temp=result.find('div',attrs={'class':'article article__list old__article-square
 output=[i.text for i in temp]
 ```
 
-The attribute `find_all` returns all the matched results. `.text` attribute automatically gets all `str` values inside the current tag. The second article has a subtitle ‘subscriber only’. So we will have a rather longer title for the second article compared to the rest. 
+The attribute `find_all` returns all the matched results. `.text` attribute automatically gets all `str` values inside the current tag. The second article has a subtitle 'subscriber only'. So we will have a rather longer title for the second article compared to the rest. 
 
 You can refer to <a href= https://github.com/je-suis-tm/web-scraping/blob/master/CME1.py>CME1</a> for more details. Please note that CME1 is an outdated script for Chicago Mercantile Exchange. Due to the change of the website, you cannot go through HTML parse tree to extract data any more. Yet, the concept of HTML parse tree is still applicable to other cases.
 
@@ -148,11 +148,11 @@ Reading JSON is not really the main purpose of this chapter. What really made me
 
 The URL is still in page source! The HTML tag for the hidden link is `<script>`. As I have mentioned at the beginning of this README file, scraping is about patience and attention to details. If you try to search all `<script>` tags, you will end up with more than 100 results. It took me a while for me to sniff the data source. My friends, patience is a virtue. 
 
-As for other websites, we may not be that lucky. Take <a href= https://www.euronext.com/en/products/indices/FR0003502079-XPAR>Euronext</a> for example, you won’t find any data in page source. We have to right click and select inspect element (CTRL+SHIFT+I in Chrome, F12 in IE).
+As for other websites, we may not be that lucky. Take <a href= https://www.euronext.com/en/products/indices/FR0003502079-XPAR>Euronext</a> for example, you won't find any data in page source. We have to right click and select inspect element (CTRL+SHIFT+I in Chrome, F12 in IE).
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cme2%20inspect%20element.png)
 
-The next step is to select Network Monitor in a pop-up window. Now let’s view data.
+The next step is to select Network Monitor in a pop-up window. Now let's view data.
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cme2%20network.PNG)
 
@@ -166,7 +166,7 @@ Voila!
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/cme2%20euronext.PNG)
 
-Euronext is still considered an easy one. Sometimes you have to post a form with valid header to get the JSON file. You will see that in the first chapter of advanced level. For more details of JSON, feel free to take a look at <a href= https://github.com/je-suis-tm/web-scraping/blob/master/CME2.py>CME2</a>. Please note that CME2 has replaced CME1 to be the available scraper for Chicago Mercantile Exchange.
+Euronext is still considered an easy one. Sometimes you have to post a form with valid header to get the JSON file. You will see that in the first chapter of advanced level. For more details of JSON, feel free to take a look at <a href= https://github.com/je-suis-tm/web-scraping/blob/master/CME2.py>CME2</a>. Please note that CME2 has replaced CME1 to be the available scraper for Chicago Mercantile Exchange. There is also <a href= https://github.com/je-suis-tm/web-scraping/blob/master/CME3.py>CME3</a> which specializes in option data.
 
 #### 3. Regular Expression (SHFE)
 
@@ -213,13 +213,13 @@ In this chapter, the example is to navigate through a JSON file by regex (way fa
 
 #### 1. Sign-in (CQF)
 
-Congrats! I assume you have mastered entry-level web scraping. Since we come to more advanced level, we will have to deal with more complex issues. In this chapter, we will talk about how to sign into a website in Python. Please bear in mind that we will only discuss login without any captcha or other Turing Test (google’s reCAPTCHA is one of the worst). It doesn’t mean captcha is the dead end for scraping. There are two ways to bypass captcha, manually downloading image for human recognition or using external package to do image recognition. You will find something <a href=https://www.tutorialspoint.com/python_web_scraping/python_web_scraping_processing_captcha.htm>here</a>.
+Congrats! I assume you have mastered entry-level web scraping. Since we come to more advanced level, we will have to deal with more complex issues. In this chapter, we will talk about how to sign into a website in Python. Please bear in mind that we will only discuss login without any captcha or other Turing Test (google's reCAPTCHA is one of the worst). It doesn't mean captcha is the dead end for scraping. There are two ways to bypass captcha, manually downloading image for human recognition or using external package to do image recognition. You will find something <a href=https://www.tutorialspoint.com/python_web_scraping/python_web_scraping_processing_captcha.htm>here</a>.
 
 Well, login is no magic. Traditionally it is posting a form consists of critical information to a certain address. When each piece of information matches the record in website backend database, the website will assign a token to you. Token is like security clearance. It enables you to visit the content that requires login. Always remember to insert a token into the header when you got one after authentication.
 
 Big companies like Facebook or Twitter use a slightly different approach called CSRF token. The website sends a token to you before sign-in. It goes without saying that CSRF token must be presented at login. There will be no more token assigned to you after authentication because the cookies will take care of everything. Think of CSRF as buying TTP in Madrid, once you tap it on the card reader to pass the gate, you do not need it to visit any station or exit the metro system. 
 
-Let’s look at a simple case, a website called CQF. This great website features many free reports and videos on quantitative finance. But, there is always a but, the annoying part is resources are exclusive to registered users. Thus, we will be forced to include the login part in our python scraper. As usual, we always take a quick look at the website before coding. When we log in, we need to inspect element to seek for the login activity (if you forget how to do this, please refer to chapter 2 in the beginner level). There are quite a few activities when we log in, right? The quickest way to distinguish the login from the rest is to search your username and password. Because username and password are normally unhashed. 
+Let's look at a simple case, a website called CQF. This great website features many free reports and videos on quantitative finance. But, there is always a but, the annoying part is resources are exclusive to registered users. Thus, we will be forced to include the login part in our python scraper. As usual, we always take a quick look at the website before coding. When we log in, we need to inspect element to seek for the login activity (if you forget how to do this, please refer to chapter 2 in the beginner level). There are quite a few activities when we log in, right? The quickest way to distinguish the login from the rest is to search your username and password. Because username and password are normally unhashed. 
 
 Now that we have located the login activity, there are three key things we need to keep an eye on. The first one is Request URL. It will be the URL we post our form to. Pay attention to Request Method. The login is often POST method, rather than GET method.
 
@@ -261,8 +261,8 @@ We have obtained the security clearance now. We can snoop around every corner as
 
 Why do we need database?
 
-There are many reasons for a big organization. For an individual user like us, the biggest advantage is, EFFICIENCY. Assume a website publishes data every day and you need consistent time series to run some models. For economic reasons, we only need to scrape the latest report each day in theory. What if one report gets delayed by some ‘technical issues’ (usually this is a lame excuse)? We have to scrape two reports next day. But we cannot keep track of everything every day and machines are supposed to do the grunt work for us. If we scrape the entire historical dataset as an alternative, it will take too much time and computing capacity. Additionally, we are running a risk of being blacklisted by the website. Some of those APIs even implement daily limit for each user. This is when database kicks in and keep tracks of everything. With records in the database, we can always start from where we left off last time. Of course, there are many other benefits of database, e.g. Data Integrity, Data Management.
-Enough of sales pitch, let’s get into the technical details of database. The package we installed is called sqlite3, referring to SQLite database. The setup of SQLite database is hassle-free, in contrast to other relational database such as MySQL or PostgreSQL. Other benefits of SQLite include rapide execution, petit size. Since we are not running a big organization, we shouldn’t be bothered with things like Azure SQL server or Mongo DB.
+There are many reasons for a big organization. For an individual user like us, the biggest advantage is, EFFICIENCY. Assume a website publishes data every day and you need consistent time series to run some models. For economic reasons, we only need to scrape the latest report each day in theory. What if one report gets delayed by some 'technical issues' (usually this is a lame excuse)? We have to scrape two reports next day. But we cannot keep track of everything every day and machines are supposed to do the grunt work for us. If we scrape the entire historical dataset as an alternative, it will take too much time and computing capacity. Additionally, we are running a risk of being blacklisted by the website. Some of those APIs even implement daily limit for each user. This is when database kicks in and keep tracks of everything. With records in the database, we can always start from where we left off last time. Of course, there are many other benefits of database, e.g. Data Integrity, Data Management.
+Enough of sales pitch, let's get into the technical details of database. The package we installed is called sqlite3, referring to SQLite database. The setup of SQLite database is hassle-free, in contrast to other relational database such as MySQL or PostgreSQL. Other benefits of SQLite include rapide execution, petit size. Since we are not running a big organization, we shouldn't be bothered with things like Azure SQL server or Mongo DB.
 
 To create a database, we simply do
 
@@ -317,7 +317,7 @@ The above is a conventional query method in sqlite3. However, pandas provide a m
 df=pd.read_sql("""SELECT * FROM table_name WHERE [column1]=value1""",conn)
 ```
 
-One of the very common issues from query is encoding. Unfortunately, I haven’t managed to solve it so far. Though there is a way to get around like this
+One of the very common issues from query is encoding. Unfortunately, I haven't managed to solve it so far. Though there is a way to get around like this
 
 ```python
 'C\'était des loques qui se traînaient'.encode('latin-1').decode('ISO-8859-1')
@@ -343,12 +343,12 @@ Feel free to take a look at <a href= https://github.com/je-suis-tm/web-scraping/
 
 #### 1. Proxy Authentication
 
-Proxy, it has always been associated with censorship. It is commonly used to access the websites blocked by some parties (e.g. governments) or it is enforced by some parties (e.g. corporates) for the purpose of surveillance. Either way, it is against liberté. Yet, it’s not my place to make a moral judgement. For whatever reason to use proxy, the authentication can become a huge pain in the ass. I have literally spent hours scratching my head to figure out why my code doesn’t work. Here are a few key points to make our life easier.
+Proxy, it has always been associated with censorship. It is commonly used to access the websites blocked by some parties (e.g. governments) or it is enforced by some parties (e.g. corporates) for the purpose of surveillance. Either way, it is against liberté. Yet, it's not my place to make a moral judgement. For whatever reason to use proxy, the authentication can become a huge pain in the ass. I have literally spent hours scratching my head to figure out why my code doesn't work. Here are a few key points to make our life easier.
 
 ###### URL Protocol, Domain and Port
 
 It goes without saying how important proxy URL is. Protocol is usually `http` but occasionally `https`. Domain could be a bunch of number (e.g. 192.168.1.1) or a normal one (e.g. myproxy.com). As for the port, it can only be numbers (e.g. 8080).
-If you don’t have URL information, you can always try to check Local Area Network Settings. Assuming you are using Windows, you can go to internet options in IE (in windows 10, you can find it in Windows Settings - Network & Internet - Proxy)
+If you don't have URL information, you can always try to check Local Area Network Settings. Assuming you are using Windows, you can go to internet options in IE (in windows 10, you can find it in Windows Settings - Network & Internet - Proxy)
 
 ![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/proxy%20ie.png)
 
@@ -386,7 +386,7 @@ For SSL certificates, we can do
 session.verify='path/proxy.cer'
 ```
 
-If you don't know where to find certificates or your IT administrator does not cooperate, additionally, there is a dangerous shortcut. We simply disable SSL verification at the risk of man in the middle attack (by raising this issue, your IT admin shall comply, it works every time :smirk: ).
+If you don't know where to find certificates or your IT administrator does not cooperate, additionally, there is a dangerous shortcut. We simply disable SSL verification at the risk of man in the middle attack (by raising this issue, your IT admin shall comply, it works every time :smirk: ). There is also a tool called <a href=http://cntlm.sourceforge.net>CNTLM</a> that helps.
 ```Python
 session.verify=False
 ```
@@ -450,7 +450,7 @@ time.sleep(rd.randint(1,5))
 
 ###### Privacy
 
-Thanks to European Union, now we have <a href=https://ec.europa.eu/info/law/law-topic/data-protection_en>General Data Protection Regulation</a>. Apart from GDPR, California is about to roll out <a href=https://oag.ca.gov/privacy/ccpa>California Consumer Privacy Act</a>. This brings challenges to the thriving business of data broker. Ideally most of us build web scrapers to scrape open data source. If you are scraping résumé from LinkedIn or stalking someone on social media, and the person is fallen under the jurisdiction of European Court of Justice, then it will be tricky. Is it considered obtaining and processing personal data without someone’s consent? I can't tell. As a consumer, I fully support the regulation safeguarding my personal data. As a coder, I would’ve recused myself from building a web scrapper with potential violations.
+Thanks to European Union, now we have <a href=https://ec.europa.eu/info/law/law-topic/data-protection_en>General Data Protection Regulation</a>. Apart from GDPR, California is about to roll out <a href=https://oag.ca.gov/privacy/ccpa>California Consumer Privacy Act</a>. This brings challenges to the thriving business of data broker. Ideally most of us build web scrapers to scrape open data source. If you are scraping résumé from LinkedIn or stalking someone on social media, and the person is fallen under the jurisdiction of European Court of Justice, then it will be tricky. Is it considered obtaining and processing personal data without someone's consent? I can't tell. As a consumer, I fully support the regulation safeguarding my personal data. As a coder, I would've recused myself from building a web scrapper with potential violations.
 
 ###### API
 

@@ -68,6 +68,7 @@ Scripts inside this repository are classified into two groups, beginner and adva
 
 <a href=https://github.com/je-suis-tm/web-scraping/blob/master/Springer.py>14. Springer Nature</a>
 
+<a href=https://github.com/je-suis-tm/web-scraping/blob/master/CFTC.py>15. CFTC</a>
 
 <br>
 

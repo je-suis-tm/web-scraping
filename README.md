@@ -341,7 +341,75 @@ Feel free to take a look at <a href= https://github.com/je-suis-tm/web-scraping/
 
 #### 3. Newsletter (MENA)
 
-<br>
+These days we receive endless bombing of newsletter both in work email and private account. Ideally, a newsletter provides you with vital and concise information to make important decisions. It’s one of the greatest end products of web scraping. Unfortunately, most of the newsletters these days merely have one objective, tapping into your inner fear of missing out. You know what? It’s time for us to show those scumbags how a great newsletter is properly done!
+
+Everyday shit happens. For someone who tracks the petroleum industry in Middle East and North Africa region, what’s the best way to keep up with the latest information? Here, we create a newsletter for the analysts who crave for market intelligence. The newsletter consists of scraping, updating, filtering and presenting. The initial stage is to scrape the news from influential sources that covers MENA region including BBC, CNN, Wall Street Journal, Financial Times, Reuters, Bloomberg and Al Jazeera. As we have gone through HTML tree, JSON searching and regular expression in the earlier chapters, this should be a walk in the park for you now. The second stage is to create a database. Since we want the latest update, not some information we have read yesterday, we need a database to keep track of the outdated information. We can simply use `insert` command to filter all the outdated information which is the topic we have covered in the previous chapter. All the outdated information would fail the inserting process due to the no-duplicate constraint. Everything being inserted will also go into the newsletter. The third stage, filtering the useful information, is beyond the scope of web scraping. How do I apply the degree centrality to prevent information overload? You can read it from the repository of <a href=https://github.com/je-suis-tm/graph-theory/blob/master/Text%20Mining%20project/README.md>graph theory</a>. The fourth stage, presenting your newsletter, is what this chapter is centered around.
+
+There are two parts of the presenting, backend and frontend. Frontend is a lot simpler in terms of codes. A nice and comprehensive frontend is all about design. There are plenty of HTML email templates you can borrow ideas from, e.g. <a href=https://stripo.email/templates>Stripo</a>. After you obtain the information from database inserting and algorithm filtering, you can embed the information into HTML. The only tricky part is to include the image. There are a few ways to do that.
+
+* Use the link of the image. This is highly recommended. Although it may be a little bit slow to load the image from the internet, it’s the most efficient way. The downside is that images are not loaded by default. The recipients need to click download image button.
+
+* Attach the image. Once all images are attached, we can add `<img src='cid: imagename.jpg'>` into HTML email. The image will be faster to load but the email definitely takes a longer while to send and receive. Another faux pas is that the script is likely to suffer from a performance issue. We have to scrape the website repeatedly to download images.
+
+* Paste the raw content in the format of base64. Add `< img src='data:image/jpg; base64, [remove the brackets and paste base64]'/>` into HTML email. Blocked by most email clients including Outlook is its big malaise.
+
+Compared to frontend, the backend is usually a pain in the ass. Backend developers don’t take credits for flawless operation, but when things go south, they are always the cannon fodder :worried: After you put everything clean and tidy into HTML email, you don’t want to launch your email client and click the send button. C’mmon, we are programmers. We can do better! There are a few ways to achieve the goal as well. My preferable choice is `win32`. This package allows you to control Microsoft applications through COM API. You can control outlook via Python as long as the email terminal is active in the background. The detailed commands can be referenced from `mailitem` object model in <a href=https://msdn.microsoft.com/en-us/vba/vba-outlook>Microsoft Developer Network</a>. If you are a user of Windows 10 Pro, your outlook autoruns at startup. This seems to be the most straight forward choice. Alternatively, there is a library called `smtp` for configuring POP3/IMAP server. I suppose the authentication of your email account would be a big hassle.
+
+With the blessing of web scraping, we eventually reduce click click click to pressing F5 in a Python IDE. Here is one final piece of the puzzle to turn your workstation into a server. The magic is called task scheduler (this is a showcase for Windows not sure Mac OS has the same thing). Task scheduler can automatically perform routine tasks at whatever criteria you set and then execute the tasks when triggered. You can run python directly in task scheduler with the script path as your argument. Here I prefer a BAT execution file which is more acceptable in a corporate network environment.
+
+Regardless of which way you pick, you need to find out where your python is installed. This can be easily done via `where python` in the command line.
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/mena%20python%20path.PNG)
+
+If you would love to directly call python.exe, you can skip the following procedures straight to the final step. Otherwise, you need to create a BAT execution file in notepad. Just specify the path to python.exe and the path to the script you want to automate.
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/mena%20bat%20file.PNG)
+
+When you save the file, remember to use the extension of `bat` instead of the default `txt` and change the file type to `All Files`. 
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/mena%20bat%20format.PNG)
+
+To launch task scheduler, you only need to search it in the start menu.
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/mena%20task%20scheduler.PNG)
+
+Let’s start a basic task from the right-hand tab.
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/mena%20create%20task.PNG)
+
+Just type in whatever name and description you want.
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/mena%20task%20name.PNG)
+
+Then select the frequency, in our case, daily.
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/mena%20freq.PNG)
+
+We can set the beginning of the execution, the time of the execution and how often the action recurs. It even allows you to synchronize the operation across different time zones. Use it especially if you are a technology consultant who frequently travels.
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/mena%20set%20time.PNG)
+
+For some unknown reasons, task scheduler has deprecated the choice of automatically sending an email. We can still achieve the same result via `win32` in Python, just to create a fabricated persona of a workaholic who sends midnight email to boss :unamused:
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/mena%20start%20program.PNG)
+
+Finally, we should input the path to BAT execution file. You can use the path to python as well. Then the path to the script is required as the argument.
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/mena%20script%20name.PNG)
+
+Felicitations, c’est fini :no_mouth:
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/mena%20finito.PNG)
+
+You can edit or delete your task from clicking the library tab.
+
+![Alt Text](https://github.com/je-suis-tm/web-scraping/blob/master/preview/mena%20check.PNG)
+
+As you can see, newsletter is not just some gibberish promotion email from Ocado. It can be used to optimize your information process as well. What kind of power a newsletter can harness is entirely up to you! 
+
+![Alt Text](https://je-suis-tm.github.io/img/newsletter.png)
+
+For more technical details, feel free to check out <a href= https://github.com/je-suis-tm/web-scraping/blob/master/MENA Newsletter.py.py>MENA%20Newsletter</a>.
 
 ## Notes
 

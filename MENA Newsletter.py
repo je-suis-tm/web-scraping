@@ -27,8 +27,8 @@ os.chdir('d:/')
 #this is a home made special package for text mining
 #it is designed to extract key information and remove similar contents
 #for details of this graph traversal algorithm plz refer to the following link
-# https://github.com/je-suis-tm/graph-theory/blob/master/Text%20Mining%20project/alternative%20bfs.py
-import graph
+# https://github.com/je-suis-tm/graph-theory/blob/master/Text%20Mining%20project/text_mining.py
+import text_mining
 
 
 #main stuff
@@ -60,7 +60,7 @@ def main():
     df=database(df)
     
     #second round, use home made package to remove similar contents
-    output=graph.remove_similar(df,graph.stopword)
+    output=text_mining.remove_similar(df,text_mining.stopword)
     
     #if the link is not correctly captured
     #remove anything before www and add https://
@@ -118,7 +118,7 @@ def main():
     
     #there are a few ways for embed image in html email
     #here, we use the link of the image
-    #it may be a lil bit slow to load the image but its the most efficient way
+    #it may be a lil bit slow to load the image, its the most efficient way
     #alternatively, we can use mail.Attachments.add()
     #we attach all images, and set <img src='cid: imagename.jpg'>
     #the downside is that we have to scrape the website repeatedly to get images

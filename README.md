@@ -409,7 +409,7 @@ As you can see, newsletter is not just some gibberish promotion email from Ocado
 
 ![Alt Text](https://je-suis-tm.github.io/img/newsletter.png)
 
-For more technical details, feel free to check out <a href= https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py.py>MENA Newsletter</a>.
+For more technical details, feel free to check out <a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>MENA Newsletter</a>.
 
 ## Notes
 

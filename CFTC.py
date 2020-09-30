@@ -34,8 +34,8 @@ def scrape(url):
 
 # In[3]:
 
+#get Data
 
-#get data
 def etl(response):
     
     #create a list
@@ -46,7 +46,7 @@ def etl(response):
     assets=[i for i in text if 'CHICAGO MERCANTILE EXCHANGE' in i]
     ind=[text.index(i) for i in assets]
     
-            
+      #intializer of list      
     overall=[]
     
     #etl

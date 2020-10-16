@@ -30,7 +30,7 @@ def scrape(url):
     
     time.sleep(rd.randint(0,10))
     
-    response=session.get(url)    
+    response=session.get(url,params={"_": int(time.time()*1000)})    
 
     return response
 
@@ -38,29 +38,12 @@ def scrape(url):
 # In[3]:
 
 
-#get expiration id
-def get_expiration(jsondata):
-        
-    expiration=pd.DataFrame.from_dict(jsondata).T
-    expiration.reset_index(inplace=True,drop=True)
-    
-    #unpack expiration id
-    var=locals()
-    for i in range(len(expiration)):
-        unpack=expiration.loc[i:i]
-        dictionary=unpack['expirations'].iloc[0]
-        del unpack['expirations']
-        del unpack['productIds']
-        del unpack['optionType']
-        var['a'+str(i)]=pd.DataFrame.from_dict(dictionary).T
-        var['a'+str(i)].columns=var['a'+str(i)].columns.str.replace('label','expiration-label')
-        
-        for j in unpack.columns:
-            var['a'+str(i)][j]=unpack[j].iloc[0]
-    
-    output=pd.concat([var['a'+str(i)] for i in range(len(expiration))])
-    
-    return output
+#get options expiration id
+def get_expiration_data(expiration_json,options_id):
+
+    expiration_dict=expiration_json[str(options_id)]['expirations']
+
+    return [expiration_dict[i]['expiration'] for i in expiration_dict]
 
 
 # In[4]:
@@ -161,73 +144,66 @@ def main():
     groupid=get_groupid(response_id.json())
     productid=get_productid(response_id.json())
         
-    #since i know group id and product id
-    #300 denotes corn future
-    future_id=300
-    future_url=f'https://www.cmegroup.com/CmeWS/mvc/Options/Categories/List/{future_id}/G'
-
     #301 denotes corn option
-    expiration_id='K0'
     option_id=301
 
     #get expiration code from futures
-    response_future=scrape(future_url)
-    expiration=get_expiration(response_future.json())
+    expiration_url=f'https://www.cmegroup.com/CmeWS/mvc/Options/Categories/List/{option_id}/G?optionTypeFilter='
+    response_expiration=scrape(expiration_url)
+    target_exp_id=get_expiration_data(response_expiration.json())
     
-    #get all monthly options
-    target_period=[i for i in expiration['expiration-label'] if 'Week' not in i]
-    target_exp_id=expiration['expiration'][expiration['expiration-label'].isin(target_period)]
-
     #get option data
     for expiration_id in target_exp_id:
         
         option_url=f'https://www.cmegroup.com/CmeWS/mvc/Quotes/Option/{option_id}/G/{expiration_id}/ALL?optionProductId={option_id}&strikeRange=ALL'
-
         response_option=scrape(option_url)
-        df=get_data(response_option.json())
+        
+        #not every expiration_id leads to concrete data
+        try:
+            df=get_data(response_option.json())
 
-        target=['options-optiontype',
-         'options-change',
-         'options-close',
-         'options-high',
-         'options-highLimit',
-         'options-last',
-         'options-low',
-         'options-lowLimit',
-         'options-mdKey',
-         'options-open',
-         'options-percentageChange',
-         'options-priorSettle',
-         'options-updated',
-         'options-volume',
-         'options-strikePrice',
-         'options-strikeRank',
-         'futures-change',
-         'futures-close',
-         'futures-expirationDate',
-         'futures-high',
-         'futures-highLimit',
-         'futures-last',
-         'futures-low',
-         'futures-lowLimit',
-         'futures-mdKey',
-         'futures-open',
-         'futures-optionUri',
-         'futures-percentageChange',
-         'futures-priorSettle',
-         'futures-productId',
-         'futures-productName',
-         'futures-updated',
-         'futures-volume',
-         'futures-default24',
-         'tradeDate']
-    
-        df=df[target]
+            target=['options-optiontype',
+             'options-change',
+             'options-close',
+             'options-high',
+             'options-highLimit',
+             'options-last',
+             'options-low',
+             'options-lowLimit',
+             'options-mdKey',
+             'options-open',
+             'options-percentageChange',
+             'options-priorSettle',
+             'options-updated',
+             'options-volume',
+             'options-strikePrice',
+             'options-strikeRank',
+             'futures-change',
+             'futures-close',
+             'futures-expirationDate',
+             'futures-high',
+             'futures-highLimit',
+             'futures-last',
+             'futures-low',
+             'futures-lowLimit',
+             'futures-mdKey',
+             'futures-open',
+             'futures-optionUri',
+             'futures-percentageChange',
+             'futures-priorSettle',
+             'futures-productId',
+             'futures-productName',
+             'futures-updated',
+             'futures-volume',
+             'futures-default24',
+             'tradeDate']
         
-        expiracy=expiration['expiration-label'][expiration['expiration']==expiration_id].iloc[0]
+            df=df[target]
+            
+            df.to_csv(f'corn option {expiration_id}.csv',index=False)
         
-        df.to_csv(f'corn option {expiracy}.csv',index=False)
-    
+        except ValueError:
+            pass
 
 if __name__ == "__main__":
     main()

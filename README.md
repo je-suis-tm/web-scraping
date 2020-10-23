@@ -40,35 +40,37 @@ Scripts inside this repository are classified into two groups, beginner and adva
 
 ## Available Scrapers
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>1. Wall Street Journal WSJ</a>
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>Al Jazeera AJ</a> 
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>2. Financial Times FT</a>
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>Bloomberg</a> 
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>3. Bloomberg</a>
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>British Broadcasting Corporation BBC</a> 
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>4. Thompson Reuters</a>
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/CFTC.py>CFTC</a> 
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>5. Al Jazeera AJ</a>
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>Cable News Network CNN</a> 
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>6. British Broadcasting Corporation BBC</a>
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/US%20Federal%20Holidays.py>Calendar Labs</a> 
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>7. Fortune</a>
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/CQF.py>Certificate in Quantitative Finance CQF</a> 
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>8. Cable News Network CNN</a>
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/CME3.py>Chicago Mercantile Exchange CME</a> 
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>9. The Economist</a>
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>Financial Times FT</a> 
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/LME.py>10. London Metal Exchange LME</a>
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>Fortune</a> 
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/CME3.py>11. Chicago Mercantile Exchange CME</a>
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/LME.py>London Metal Exchange LME</a> 
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/SHFE.py>12. Shanghai Future Exchange SHFE</a>
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/SHFE.py>Shanghai Future Exchange SHFE</a> 
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/CQF.py>13. Certificate in Quantitative Finance CQF</a>
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/Springer.py>Springer Nature</a> 
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/Springer.py>14. Springer Nature</a>
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>The Economist</a> 
 
-<a href=https://github.com/je-suis-tm/web-scraping/blob/master/CFTC.py>15. CFTC</a>
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>Thompson Reuters</a> 
+
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>Wall Street Journal WSJ</a> 
 
 <br>
 

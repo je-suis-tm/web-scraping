@@ -52,7 +52,7 @@ def main():
     #convert to datetime
     data['Date']=pd.to_datetime(data['Date'])
     
-    data.to_csv('Daily Treasury Yield Curve Rates.csv',index=False)
+    data.to_csv('treasury yield curve rates.csv',index=False)
     
 if __name__ == "__main__":
     main()

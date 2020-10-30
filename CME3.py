@@ -43,7 +43,7 @@ def get_expiration_data(expiration_json,options_id):
 
     expiration_dict=expiration_json[str(options_id)]['expirations']
 
-    return [expiration_dict[i]['expiration'] for i in expiration_dict]
+    return [(expiration_dict[i]['expiration'],expiration_dict[i]['label']) for i in expiration_dict]
 
 
 # In[4]:
@@ -153,7 +153,7 @@ def main():
     target_exp_id=get_expiration_data(response_expiration.json())
     
     #get option data
-    for expiration_id in target_exp_id:
+    for expiration_id,expiration_date in target_exp_id:
         
         option_url=f'https://www.cmegroup.com/CmeWS/mvc/Quotes/Option/{option_id}/G/{expiration_id}/ALL?optionProductId={option_id}&strikeRange=ALL'
         response_option=scrape(option_url)
@@ -199,6 +199,11 @@ def main():
              'tradeDate']
         
             df=df[target]
+            
+            #fix the expiration mismatch between futures and options
+            #or you can use cme rule based month coding system
+            # https://www.cmegroup.com/month-codes.html
+            df['futures-expirationDate']=pd.to_datetime(expiration_date)
             
             df.to_csv(f'corn option {expiration_id}.csv',index=False)
         

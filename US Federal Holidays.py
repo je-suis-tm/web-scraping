@@ -8,6 +8,8 @@
 
 #this script computes cme holidays
 #based upon federal holidays for the next two years
+#the trading calendar is crucial to the vix calculator
+# https://github.com/je-suis-tm/quant-trading/blob/master/VIX%20Calculator.py
 #if you just want the current year holiday calendar
 # https://www.cmegroup.com/tools-information/holiday-calendar.html
 
@@ -76,6 +78,8 @@ def get_cme_holidays():
         holidays['DATE']=pd.to_datetime(holidays['DATE'])
         
         #only select federal holiday + good friday
+        #cuz july the 4th and labor day is at the beginning of the month
+        #all monthly options expire at the end of the month
         cme_holidays=holidays[holidays['HOLIDAY'].isin(federal_holidays)]
         cme_holidays.reset_index(inplace=True,drop=True)
         

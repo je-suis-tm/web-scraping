@@ -54,7 +54,9 @@ Scripts inside this repository are classified into two groups, beginner and adva
 
 * <a href=https://github.com/je-suis-tm/web-scraping/blob/master/CQF.py>Certificate in Quantitative Finance CQF</a> 
 
-* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/CME3.py>Chicago Mercantile Exchange CME</a> 
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/CME2.py>Chicago Mercantile Exchange CME Futures</a> 
+
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/CME3.py>Chicago Mercantile Exchange CME Options</a> 
 
 * <a href=https://github.com/je-suis-tm/web-scraping/blob/master/MENA%20Newsletter.py>Financial Times FT</a> 
 

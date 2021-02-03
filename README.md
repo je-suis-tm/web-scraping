@@ -64,6 +64,8 @@ Scripts inside this repository are classified into two groups, beginner and adva
 
 * <a href=https://github.com/je-suis-tm/web-scraping/blob/master/LME.py>London Metal Exchange LME</a> 
 
+* <a href=https://github.com/je-suis-tm/web-scraping/blob/master/WallStreetBets.py>Reddit WallStreetBets</a>
+
 * <a href=https://github.com/je-suis-tm/web-scraping/blob/master/SHFE.py>Shanghai Future Exchange SHFE</a> 
 
 * <a href=https://github.com/je-suis-tm/web-scraping/blob/master/Springer.py>Springer Nature</a> 

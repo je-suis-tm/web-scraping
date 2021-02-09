@@ -81,7 +81,9 @@ stopword_dict=punctuations+['i','yolo', 'fuck', 'fucking', 'shit',
                              'wasn', "wasn't", 'weren', "weren't",
                              'won','other','others', "won't",'guys',
                              'another','many','much', 'wouldn','guy',
-                             'go', "wouldn't",'retard','retards']
+                             'go', "wouldn't",'retard','retards',
+                             'dick','dickhead','bitch','porn',
+                             'asshole','pussy','cock']
 
 commodities_of_interests=['wheat','soybean','corn','milk','cheese',
                           'butter','whey','lean hog','live cattle',

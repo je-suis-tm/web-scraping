@@ -10,6 +10,7 @@ import requests
 import pandas as pd
 from io import BytesIO
 import re
+import pyodbc
 
 
 #say if we wanna get the trader commitment report of lme from the link below
@@ -98,12 +99,43 @@ def etl(content,date):
     return output
 
 
+#for sql server
+#we have to use pyodbc driver
+def connect(
+        server=None, database=None, driver=None,
+        username=None, password=None,
+        autocommit=False
+    ):
+        """ get the db connection """
+        connection_string = "Driver={driver}; Server={server}; Database={database}"
+        if username:
+            connection_string += "; UID={username}"
+        if password:
+            connection_string += "; PWD={password}"
+        if not driver:
+            driver = [
+                d for d in sorted(pyodbc.drivers())
+                if re.match(r"(ODBC Driver \d+ for )?SQL Server", d)
+            ][0]
+    
+        return pyodbc.connect(
+            connection_string.format(
+                server=server,
+                database=database,
+                driver=driver,
+                username=username,
+                password=password,
+            ),
+            autocommit=autocommit,
+        )
+            
+            
 #this function is to insert data into sqlite3 database
 #i will not go into details for sql grammar
 #for pythoners, sql is a piece of cake
 #go check out the following link for sql
 # https://www.w3schools.com/sql/
-def database(df):
+def database(df,SQL=False):
     
     #plz make sure u have created the database and the table to proceed
     #to create a table in database, first two lines are the same as below
@@ -113,13 +145,19 @@ def database(df):
     #conn.commit()
     #conn.close()
     
-    #to see what it looks like in the database
-    #use microsoft access or toad or just pandas
-    #db=pd.read_sql("""SELECT * FROM lme""",conn)
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-    
-    
+    #connect to sqlite3
+    if not SQL:
+        
+        #to see what it looks like in the database
+        #use microsoft access or toad or just pandas
+        #db=pd.read_sql("""SELECT * FROM lme""",conn)
+        conn = sqlite3.connect('database.db')
+    else:
+        SERVER='10.10.10.10'
+        DATABASE='meme_stock'
+        conn=connect(SERVER,DATABASE,'SQL Server')
+    c = conn.cursor()      
+        
     #insert data
     for i in range(len(df)):
         try:

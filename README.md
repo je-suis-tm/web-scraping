@@ -274,7 +274,7 @@ We have obtained the security clearance now. We can snoop around every corner as
 Why do we need database?
 
 There are many reasons for a big organization. For an individual user like us, the biggest advantage is, EFFICIENCY. Assume a website publishes data every day and you need consistent time series to run some models. For economic reasons, we only need to scrape the latest report each day in theory. What if one report gets delayed by some 'technical issues' (usually this is a lame excuse)? We have to scrape two reports next day. But we cannot keep track of everything every day and machines are supposed to do the grunt work for us. If we scrape the entire historical dataset as an alternative, it will take too much time and computing capacity. Additionally, we are running a risk of being blacklisted by the website. Some of those APIs even implement daily limit for each user. This is when database kicks in and keep tracks of everything. With records in the database, we can always start from where we left off last time. Of course, there are many other benefits of database, e.g. Data Integrity, Data Management.
-Enough of sales pitch, let's get into the technical details of database. The package we installed is called sqlite3, referring to SQLite database. The setup of SQLite database is hassle-free, in contrast to other relational database such as MySQL or PostgreSQL. Other benefits of SQLite include rapide execution, petit size. Since we are not running a big organization, we shouldn't be bothered with things like Azure SQL server or Mongo DB.
+Enough of sales pitch, let's get into the technical details of database. The package we installed is called sqlite3, referring to SQLite database. The setup of SQLite database is hassle-free, in contrast to other relational database such as MySQL or PostgreSQL. Other benefits of SQLite include rapide execution, petit size. Since we are not running a big organization, we shouldn't be bothered with things like Azure, SQL server or Mongo DB.
 
 To create a database, we simply do
 
@@ -284,6 +284,15 @@ c = conn.cursor()
 ```
 
 The above command would create a database if it does not exist in a given directory. If it exists, it will automatically connect to the database instead. 
+
+If you are connecting to corporate server, you might consider the following <a href=https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/step-3-proof-of-concept-connecting-to-sql-using-pyodbc?view=sql-server-ver15>tutorial</a> on `pyodbc`. To connect to SQL server, simply do
+
+```python
+import pyodbc
+conn = pyodbc.connect('DRIVER={SQL Server};SERVER=some_ip_address;DATABASE=some_database_name;UID=some_username;PWD=some_password')
+c = conn.cursor()
+```
+
 
 Next step is to create a table in the database, we can do
 

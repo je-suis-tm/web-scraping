@@ -285,7 +285,7 @@ c = conn.cursor()
 
 The above command would create a database if it does not exist in a given directory. If it exists, it will automatically connect to the database instead. 
 
-If you are connecting to corporate server, you might consider the following <a href=https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/step-3-proof-of-concept-connecting-to-sql-using-pyodbc?view=sql-server-ver15>tutorial</a> on `pyodbc`. To connect to SQL server, simply do
+If you are connecting to corporate server, you might consider the following <a href=https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/step-3-proof-of-concept-connecting-to-sql-using-pyodbc>tutorial</a> on `pyodbc`. To connect to SQL server, simply do
 
 ```python
 import pyodbc

@@ -123,7 +123,16 @@ def main():
     #we attach all images, and set <img src='cid: imagename.jpg'>
     #the downside is that we have to scrape the website repeatedly to get images
     #or we can use < img src='data:image/jpg; base64, [remove the brackets and paste base64]'/>
-    #but this is blocked by most email clients including outlook 2016
+    #base64 can be generated via the following code
+    # from io import BytesIO
+    # import base64
+    # def create_image_in_html(fig):
+    #     tmpfile = BytesIO()
+    #     fig.savefig(tmpfile, format='png')
+    #     encoded = base64.b64encode(
+    #         tmpfile.getvalue()).decode('utf-8')
+    #     return encoded
+    #but this approach is blocked by most email clients including outlook 2016
     for i in range(len(output)):
         html+="""<table class="es-content-body" width="600" 
         cellspacing="10" cellpadding="5" bgcolor="#ffffff"

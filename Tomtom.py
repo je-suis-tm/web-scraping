@@ -12,10 +12,88 @@ import os
 os.chdir('k:/')
 
 
-def main():
-
+#
+def scrape(city):
+    
     prefix = 'https://api.midway.tomtom.com/ranking/liveHourly/'
+    
+    session = requests.Session()
+    response = session.get(prefix+city)
+        
+    return response
 
+
+#
+def etl(rawdata,target,city,historic_avg):
+    
+    # json keys
+    cols = rawdata['data'][0].keys()
+
+    # add some missing column
+    for i in range(len(rawdata['data'])):
+        for j in cols:
+            if j not in rawdata['data'][i].keys():
+                rawdata['data'][i][j] = np.nan
+
+    df = pd.DataFrame()
+
+    # fill in data
+    for col in cols:
+        df[col] = [i[col] for i in rawdata['data']]
+
+    # there is only system time
+    t0 = dt.datetime(1970, 1, 1, 1, 44)
+
+    # convert system time to real time
+    df['datetime'] = [
+            t0 + dt.timedelta(minutes=i / 60000) for i in df['UpdateTime'].tolist()
+        ]
+
+    # change column name
+    df.columns = df.columns.str.replace('TrafficIndexLive', 'LiveCongestion')
+    df.columns = df.columns.str.replace(
+            'TrafficIndexHistoric', 'LastYearAverageCongestion'
+        )
+    
+    # get daily average
+    df['datetime'] = pd.to_datetime(df['datetime'])
+    datelist = set(df['datetime'].dt.date)
+    df.set_index('datetime', inplace=True)
+
+    # create cols
+    df['LiveCongestionDaily'] = np.nan
+    df['LastYearAverageCongestionDaily'] = np.nan
+    df['location'] = target[city]['location']
+    df['country'] = target[city]['country']
+
+    # create daily average
+    for i in datelist:
+        df['LiveCongestionDaily'][
+                i.strftime('%Y-%m-%d') : i.strftime('%Y-%m-%d')
+            ] = df['LiveCongestion'][
+                i.strftime('%Y-%m-%d') : i.strftime('%Y-%m-%d')
+            ].mean()
+        if "LastYearAverageCongestion" in df.columns:
+            df['LastYearAverageCongestionDaily'][
+                    i.strftime('%Y-%m-%d') : i.strftime('%Y-%m-%d')
+                ] = df['LastYearAverageCongestion'][
+                    i.strftime('%Y-%m-%d') : i.strftime('%Y-%m-%d')
+                ].mean()
+            
+        # if no historic, use historic avg
+        else:
+            df['LastYearAverageCongestionDaily'][
+                    i.strftime('%Y-%m-%d') : i.strftime('%Y-%m-%d')
+                ] = historic_avg[target[city]['location']][dt.datetime.weekday(i)]
+
+    # create output
+    df.reset_index(inplace=True)
+    df.to_csv(f'{target[city]["location"]}.csv')
+
+#
+def main():
+   
+    # target to be scraped
     target = {
         'FRA%2FCircle%2Fparis': {'country': 'France', 'location': 'Paris'},
         'ITA%2FCircle%2Fmilan': {'country': 'Italy', 'location': 'Milan'},
@@ -35,6 +113,8 @@ def main():
         'USA%2FCircle%2Fseattle': {'country': 'United States', 'location': 'Seattle'},
     }
 
+    # tomtom used to offer historical data in api
+    # now we have to hardcode the number
     historic_avg = {
         'Frankfurt': {
             0: 14.828168159761104,
@@ -127,81 +207,14 @@ def main():
             6: 15.289682095309194,
         }}
 
-    for url in target:
+    for city in target:
 
         time.sleep(5)
-        print(url)
-        session=requests.Session()
-        page = session.get(prefix + url,verify=False)
-
-        rawdata = page.json()
-        try:
-            # json keys
-            cols = rawdata['data'][0].keys()
-        except IndexError :
-            continue
-
-        # add some missing column
-        for i in range(len(rawdata['data'])):
-            for j in cols:
-                if j not in rawdata['data'][i].keys():
-                    rawdata['data'][i][j] = np.nan
-
-        df = pd.DataFrame()
-
-        # fill in data
-        for col in cols:
-            df[col] = [i[col] for i in rawdata['data']]
-
-        # there is only system time
-        t0 = dt.datetime(1970, 1, 1, 1, 44)
-
-        # convert system time to real time
-        df['datetime'] = [
-            t0 + dt.timedelta(minutes=i / 60000) for i in df['UpdateTime'].tolist()
-        ]
-
-        # change column name
-        df.columns = df.columns.str.replace('TrafficIndexLive', 'LiveCongestion')
-        df.columns = df.columns.str.replace(
-            'TrafficIndexHistoric', 'LastYearAverageCongestion'
-        )
-
-        df['location'] = target[url]['location']
-        df['country'] = target[url]['country']
-
-        # get daily average
-        df['datetime'] = pd.to_datetime(df['datetime'])
-
-        datelist = set(df['datetime'].dt.date)
-
-        df.set_index('datetime', inplace=True)
-
-        df['LiveCongestionDaily'] = np.nan
-        df['LastYearAverageCongestionDaily'] = np.nan
-
-        for i in datelist:
-            df['LiveCongestionDaily'][
-                i.strftime('%Y-%m-%d') : i.strftime('%Y-%m-%d')
-            ] = df['LiveCongestion'][
-                i.strftime('%Y-%m-%d') : i.strftime('%Y-%m-%d')
-            ].mean()
-            if "LastYearAverageCongestion" in df.columns:
-                df['LastYearAverageCongestionDaily'][
-                    i.strftime('%Y-%m-%d') : i.strftime('%Y-%m-%d')
-                ] = df['LastYearAverageCongestion'][
-                    i.strftime('%Y-%m-%d') : i.strftime('%Y-%m-%d')
-                ].mean()
-            # if no historic, use historic avg
-            else:
-                df['LastYearAverageCongestionDaily'][
-                    i.strftime('%Y-%m-%d') : i.strftime('%Y-%m-%d')
-                ] = historic_avg[target[url]['location']][dt.datetime.weekday(i)]
-
-        df.reset_index(inplace=True)
-
-        df.to_csv(f'{target[url]["location"]}.csv')
-
+        print(city)
+        response = scrape(city)
+        rawdata = response.json()
+        etl(rawdata,target,city,historic_avg)        
+        
     return
 
 

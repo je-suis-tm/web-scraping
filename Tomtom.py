@@ -73,6 +73,9 @@ def etl(rawdata,target,city,historic_avg):
             ] = df['LiveCongestion'][
                 i.strftime('%Y-%m-%d') : i.strftime('%Y-%m-%d')
             ].mean()
+        
+        # there used to be last year avg
+        # if it reappears, take daily average instead of 15 min interval by default
         if "LastYearAverageCongestion" in df.columns:
             df['LastYearAverageCongestionDaily'][
                     i.strftime('%Y-%m-%d') : i.strftime('%Y-%m-%d')
